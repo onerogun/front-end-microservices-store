@@ -8,7 +8,8 @@ import { Login } from "./Auth/Login";
 import { CookiesProvider } from "react-cookie";
 import { CustomerSignUp } from "./Components/CustomerSignUp";
 import { NavBar } from "./Components/Navbar";
-import { Image } from "./ProductSource/Image";
+import { Images } from "./ProductSource/Image";
+import { ProductDetails } from "./ProductSource/ProductDetails";
 
 function App() {
   return (
@@ -20,10 +21,14 @@ function App() {
               <NavBar />
               <Switch>
                 <Route exact path="/" component={Product} />
-                <Route path="/addProduct" component={AddProduct} />
                 <Route exact path="/login" component={Login} />
+                <Route path="/addProduct" component={AddProduct} />
                 <Route path="/signUp" component={CustomerSignUp} />
-                <Route path="/image" component={Image} />
+                <Route path="/image/:itemId" component={Images} />
+                <Route
+                  path="/product-details/:itemId"
+                  component={ProductDetails}
+                />
               </Switch>
             </React.Fragment>
           </ProductProvider>

@@ -1,9 +1,7 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useMemo } from "react";
 import { ServerContext } from "../Contexts/ServerContext";
 import axios from "axios";
-import { Button, Container } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
+import { UploadProductImage } from "./UploadProductImage";
 
 export const AddProduct = () => {
   const server = useContext(ServerContext);
@@ -34,6 +32,8 @@ export const AddProduct = () => {
     itemLeftInStock: inStock,
   };
 
+  const [itemSaving, setItemSaving] = useState([]);
+
   const sendToServer = (product) => {
     axios
       .post(`${server}/items/addItem`, newItem, {
@@ -42,8 +42,10 @@ export const AddProduct = () => {
           Authorization: localStorage.getItem("TokenJWT"),
         },
       })
-      .then(() => {
+      .then((response) => {
         console.log("item sent to server");
+        console.log(response.data);
+        setItemSaving(response.data);
         window.alert("Item saved!");
       })
       .catch((err) => {
@@ -52,6 +54,12 @@ export const AddProduct = () => {
       });
   };
 
+  
+/*const savedItem = useMemo(() => {
+    console.log(itemSaving);
+    return itemSaving;
+  }, [itemSaving]);
+*/
   const validateForm = () => {
     return (
       itemName.length > 0 && itemPrice > 0 && category.length > 0 && inStock > 0
@@ -59,64 +67,97 @@ export const AddProduct = () => {
   };
 
   return (
-    <Container>
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>Product Name</Form.Label>
-          <Form.Control
-            autoFocus
-            type="text"
-            value={itemName}
-            onChange={(e) => setItemName((prev) => e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Product Price</Form.Label>
-          <Form.Control
-            type="text"
-            onChange={(e) => setItemPrice(parseFloat(e.target.value))}
-            required
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Product Category</Form.Label>
-          <Form.Control
-            type="text"
-            value={category}
-            onChange={(e) => setCategory((prev) => e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Product Featured:</Form.Label>
-          <Form.Control
-            type="checkbox"
-            value={featured}
-            onChange={(e) => setFeatured((prev) => !prev)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Number of Product in Stock</Form.Label>
-          <Form.Control
-            type="number"
-            value={inStock}
-            onChange={(e) => {
-              setInStock(e.target.valueAsNumber);
-              console.log(e.target.valueAsNumber);
-            }}
-            required
-          />
-        </Form.Group>
-        <Button block size="lg" type="submit" disabled={!validateForm()}>
-          Add Product
-        </Button>
-        <Link to="/" className="m-5">
-          <Button block size="lg">
-            Home
-          </Button>
-        </Link>
-      </Form>
-    </Container>
+    <div className="container pt-5">
+      <div className="row justify-content-center">
+        <form
+          className="col-6 g-3 needs-validation"
+          noValidate
+          validated={validated}
+          onSubmit={handleSubmit}
+        >
+          <div className="col-7">
+            <label for="itemname" className="form-label">
+              Product Name
+            </label>
+            <input
+              autoFocus
+              className="form-control"
+              id="itemname"
+              type="text"
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="col-7">
+            <label for="itemprice" className="form-label">
+              Product Price
+            </label>
+            <input
+              className="form-control"
+              id="itemprice"
+              type="text"
+              onChange={(e) => setItemPrice(parseFloat(e.target.value))}
+              required
+            />
+          </div>
+          <div className="col-7">
+            <label for="itemcategory" className="form-label">
+              Product Category
+            </label>
+            <input
+              id="itemcategory"
+              className="form-control"
+              type="text"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              required
+            />
+
+            <div className="col-7">
+              <label for="itemnuminstock" className="form-label">
+                Number of Product in Stock
+              </label>
+              <input
+                id="itemnuminstock"
+                className="form-control"
+                type="text"
+                value={inStock}
+                onChange={(e) => {
+                  setInStock(e.target.value);
+                }}
+                required
+              />
+            </div>
+          </div>
+          <div className="col-12">
+            <div className="form-check">
+              <label for="itemfeatured" className="from-check-label">
+                Product Featured
+              </label>
+              <input
+                className="form-check-input"
+                id="itemfeatured"
+                type="checkbox"
+                value={featured}
+                onChange={(e) => setFeatured((prev) => !prev)}
+              />
+            </div>
+          </div>
+          <div className="col-12">
+            <button
+              className="btn btn-primary p-2"
+              type="submit"
+              disabled={!validateForm()}
+            >
+              Add Product
+            </button>
+          </div>
+        </form>
+        <div className="col-4 my-auto">
+          <UploadProductImage {...itemSaving} />
+        </div>
+      </div>
+    </div>
   );
 };

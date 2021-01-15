@@ -101,7 +101,7 @@ export const CustomerSignUp = (props) => {
                 autoFocus
                 type="text"
                 value={name}
-                onChange={(e) => setName((prev) => e.target.value)}
+                onChange={(e) => setName(e.target.value)}
               />
             </Form.Group>
 
@@ -110,7 +110,7 @@ export const CustomerSignUp = (props) => {
               <Form.Control
                 type="email"
                 value={email}
-                onChange={(e) => setEmail((prev) => e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
           </Col>
@@ -120,7 +120,7 @@ export const CustomerSignUp = (props) => {
               <Form.Control
                 type="text"
                 value={username}
-                onChange={(e) => setusername((prev) => e.target.value)}
+                onChange={(e) => setusername(e.target.value)}
               />
             </Form.Group>
 
@@ -131,7 +131,7 @@ export const CustomerSignUp = (props) => {
                   <Form.Control
                     type="password"
                     value={passw}
-                    onChange={(e) => setPassw((prev) => e.target.value)}
+                    onChange={(e) => setPassw(e.target.value)}
                     onBlur={(e) => {
                       if (!firstCompare) {
                         compare();
@@ -149,7 +149,7 @@ export const CustomerSignUp = (props) => {
                   <Form.Control
                     type="password"
                     value={confirmpassw}
-                    onChange={(e) => setConfirmpassw((prev) => e.target.value)}
+                    onChange={(e) => setConfirmpassw(e.target.value)}
                     onBlur={(e) => {
                       setFirstCompare((prev) => false);
                       compare();

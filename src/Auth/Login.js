@@ -48,35 +48,53 @@ export const Login = (props) => {
   };
 
   return (
-    <div className="Login">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group size="lg" controlId="username">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            autoFocus
-            type="text"
-            value={userName}
-            onChange={(e) => setUsername((prev) => e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group size="lg" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            autoFocus
-            type="password"
-            value={passWord}
-            onChange={(e) => setPassword((prev) => e.target.value)}
-          />
-        </Form.Group>
-        <Button block size="lg" type="submit" disabled={!validateForm()}>
-          Login
-        </Button>
-        <Link to="/signUp" className="m-5">
-          <Button block size="lg">
-            Sign Up
-          </Button>
-        </Link>
-      </Form>
+    <div className="container mt-5 ">
+      <form className="g-3 needs-validation " onSubmit={handleSubmit}>
+        <div className="row ">
+          <div className="col-md-4 mx-auto">
+            <label className="form-label" for="username">
+              Username
+            </label>
+            <input
+              autoFocus
+              id="username"
+              className="form-control"
+              type="text"
+              value={userName}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-4 mx-auto">
+            <label className="form-label" for="password">
+              Password
+            </label>
+            <input
+              id="password"
+              className="form-control"
+              type="password"
+              value={passWord}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="row clearfix">
+          <div className="col-md-4 mx-auto mt-2 float-star">
+            <button
+              className="btn btn-primary px-5"
+              type="submit"
+              disabled={!validateForm()}
+            >
+              Login
+            </button>
+
+            <a className="btn btn-primary mr-2 float-end px-5" href={`/signUp`} role="button">
+              Sign Up
+            </a>
+          </div>
+        </div>
+      </form>
     </div>
   );
 };
