@@ -16,6 +16,7 @@ export const Images = (props) => {
   }, []);
 
   const FetchPath = () => {
+    //Method returns a list of path locations for a particular item.
     axios
       .get(`${server}/items/getItemFileLocations/${props.itemId}`)
       .then((res) => {
@@ -24,6 +25,9 @@ export const Images = (props) => {
         //paths.current = res.data.pathObjList;
         // setLoading(false);
 
+        /**
+         * For returned path list, load each image from server and add to (pics) Ref, destructure the Ref first and add loaded image
+         */
         res.data.pathObjList.map((pathObj) => {
           const src = `${server}/storage/getItemFiles/${pathObj.itemId}/${pathObj.path}`;
           var imageToLoad = new Image();
@@ -67,15 +71,18 @@ export const Images = (props) => {
     return null;
   }
   //get 3 consequent pics and put in a list
-  let lst;
+  let listOf3DashImages;
   if (imgs[firstIndex] != null) {
-    lst = [imgs[firstIndex]];
+    listOf3DashImages = [imgs[firstIndex]];
   }
   if (imgs[(firstIndex + 1) % imgs.length] != null) {
-    lst = [imgs[firstIndex], imgs[(firstIndex + 1) % imgs.length]];
+    listOf3DashImages = [
+      imgs[firstIndex],
+      imgs[(firstIndex + 1) % imgs.length],
+    ];
   }
   if (imgs[(firstIndex + 2) % imgs.length] != null) {
-    lst = [
+    listOf3DashImages = [
       imgs[firstIndex],
       imgs[(firstIndex + 1) % imgs.length],
       imgs[(firstIndex + 2) % imgs.length],
@@ -86,9 +93,12 @@ export const Images = (props) => {
   //button id is same as image's place in array
   const selectMain = (e) => {
     const imgId = e.target.id;
-    mainImage.current.src = lst[imgId].src;
+    mainImage.current.src = listOf3DashImages[imgId].src;
   };
 
+  /**
+   * Two rows inside a container to seperate different functionalities from each other
+   */
   return (
     <div className="container ">
       <div className="row row-cols-1 pb-2">
@@ -106,7 +116,7 @@ export const Images = (props) => {
         </div>
       </div>
       <div className="row row-cols-3 carousel slide">
-        {lst.map((imgg, index) => {
+        {listOf3DashImages.map((imgg, index) => {
           return (
             <div className="col position-relative" key={index}>
               <div className="card">
