@@ -38,6 +38,7 @@ export const ProductCoverImage = (props) => {
 
   return (
     <img
+    style={{ height: "20rem", width:"20rem" }}
       alt="Product"
       className="img-fluid"
       src={`http://localhost:9696/storage/getItemFiles/${obj.itemId}/${obj.path}`}

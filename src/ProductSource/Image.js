@@ -102,7 +102,7 @@ export const Images = (props) => {
   return (
     <div className="container ">
       <div className="row row-cols-1 pb-2">
-        <div className="col-12">
+        <div className="col-10">
           <div className="card">
             <div className="img-container">
               <img
@@ -118,7 +118,7 @@ export const Images = (props) => {
       <div className="row row-cols-3 carousel slide">
         {listOf3DashImages.map((imgg, index) => {
           return (
-            <div className="col position-relative" key={index}>
+            <div className="col-3 position-relative" key={index}>
               <div className="card">
                 <div className="img-container">
                   <img alt="Product" className="card-img-top" src={imgg.src} />

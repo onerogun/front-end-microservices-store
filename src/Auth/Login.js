@@ -1,10 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import axios from "axios";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import "./Login.css";
 import { ServerContext } from "../Contexts/ServerContext";
-import { Link } from "react-router-dom";
+import LoginModal from "../Components/LoginModal";
+
 //import { useCookies } from "react-cookie";
 /*setCookie("token", response.headers.authorization, {
     path: "/",
@@ -16,6 +15,8 @@ export const Login = (props) => {
   const [userName, setUsername] = useState("");
   const [passWord, setPassword] = useState("");
   const server = useContext(ServerContext);
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   function validateForm() {
     return userName.length > 0 && passWord.length > 0;
@@ -40,13 +41,14 @@ export const Login = (props) => {
         console.log("Login sent!");
         console.log(response.headers.authorization);
         localStorage.setItem("TokenJWT", response.headers.authorization);
-        props.history.push("/");
+        setModalOpen(true);
+        //  props.history.push("/");
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
+  console.log(modalOpen);
   return (
     <div className="container mt-5 ">
       <form className="g-3 needs-validation " onSubmit={handleSubmit}>
@@ -89,11 +91,16 @@ export const Login = (props) => {
               Login
             </button>
 
-            <a className="btn btn-primary mr-2 float-end px-5" href={`/signUp`} role="button">
+            <a
+              className="btn btn-primary mr-2 float-end px-5"
+              href={`/signUp`}
+              role="button"
+            >
               Sign Up
             </a>
           </div>
         </div>
+        <LoginModal isModalOpen={modalOpen} history={props.history} />
       </form>
     </div>
   );

@@ -10,6 +10,7 @@ import { CustomerSignUp } from "./Components/CustomerSignUp";
 import { NavBar } from "./Components/Navbar";
 import { Images } from "./ProductSource/Image";
 import { ProductDetails } from "./ProductSource/ProductDetails";
+import { EditProductDescription } from "./ProductSource/EditProductDescription";
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
                 <Route
                   path="/product-details/:itemId"
                   component={ProductDetails}
+                />
+                <Route
+                  path="/edit-product-description/:itemId"
+                  component={EditProductDescription}
                 />
               </Switch>
             </React.Fragment>
