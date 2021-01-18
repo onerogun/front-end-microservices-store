@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
-import { withRouter } from "react-router-dom";
 
 function LoginModal({ history, isModalOpen }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,4 +41,4 @@ function LoginModal({ history, isModalOpen }) {
   );
 }
 
-export default withRouter(LoginModal);
+export default LoginModal;

@@ -1,10 +1,10 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import axios from "axios";
 import "./Login.css";
 import { ServerContext } from "../Contexts/ServerContext";
 import LoginModal from "../Components/LoginModal";
+import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
 
-//import { useCookies } from "react-cookie";
 /*setCookie("token", response.headers.authorization, {
     path: "/",
     expires: new Date(2030, 1, 1)
@@ -15,8 +15,18 @@ export const Login = (props) => {
   const [userName, setUsername] = useState("");
   const [passWord, setPassword] = useState("");
   const server = useContext(ServerContext);
+  const [loggedIn, setLoggedIn] = useContext(LoginSuccessContext);
 
   const [modalOpen, setModalOpen] = useState(false);
+
+  const showErr = useRef();
+  useEffect(() => {
+    if (loggedIn) {
+      console.log(loggedIn + " already logged in , redirecting!");
+      setModalOpen(true);
+      showErr.current.className = "visually-hidden";
+    }
+  }, [loggedIn]);
 
   function validateForm() {
     return userName.length > 0 && passWord.length > 0;
@@ -34,23 +44,29 @@ export const Login = (props) => {
       },
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
     })
       .then((response) => {
         console.log("Login sent!");
-        console.log(response.headers.authorization);
+        console.log(response.headers);
         localStorage.setItem("TokenJWT", response.headers.authorization);
+        console.log(localStorage.getItem("TokenJWT"));
         setModalOpen(true);
-        //  props.history.push("/");
+        showErr.current.className = "visually-hidden";
+        setLoggedIn(true);
       })
       .catch((err) => {
         console.log(err);
+        showErr.current.className =
+          "col-5 alert alert-danger mx-auto fw-normal fs-3 text-dark text-center";
       });
   };
-  console.log(modalOpen);
+
   return (
     <div className="container mt-5 ">
+      <div ref={showErr} className="visually-hidden" role="alert">
+        Wrong username or password!
+      </div>
       <form className="g-3 needs-validation " onSubmit={handleSubmit}>
         <div className="row ">
           <div className="col-md-4 mx-auto">

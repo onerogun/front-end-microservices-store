@@ -1,36 +1,89 @@
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect, useContext } from "react";
+import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
+import { ServerContext } from "../Contexts/ServerContext";
 
 export const NavBar = () => {
+  const [loggedIn] = useContext(LoginSuccessContext);
+  const [searchWord, setSearchWord] = useState();
+  const server = useContext(ServerContext);
+  useEffect(() => {
+    if (searchWord) {
+      SearchTyped(searchWord);
+    }
+  }, [searchWord]);
+
+  const SearchTyped = (word) => {
+    axios
+      .get(`${server}/items/searchItems/${word}`)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+
+  console.log(loggedIn);
   return (
-    <React.Fragment>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand href="/">Home</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="/addProduct">Add Product</Nav.Link>
-            <Nav.Link href="#">Space</Nav.Link>
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-          <Nav>
-            <Nav.Link href="#deets">More deets</Nav.Link>
-            <Nav.Link eventKey={2} href="/login">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container-fluid">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo03"
+          aria-controls="navbarTogglerDemo03"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <a className="navbar-brand" href="/">
+          Home
+        </a>
+        <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <a
+                className="nav-link text-dark"
+                aria-current="page"
+                href="/addProduct"
+              >
+                Add Product
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link text-dark" href="#">
+                Link
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link text-dark" href="/profile">
+                Your Profile
+              </a>
+            </li>
+          </ul>
+          <form className="d-flex">
+            <input
+              className="form-control me-2"
+              value={searchWord}
+              onChange={(e) => setSearchWord(e.target.value)}
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button className="btn btn-outline-success me-5" type="submit">
+              Search
+            </button>
+          </form>
+          {loggedIn ? (
+            <a className="nav-link text-dark" href="/profile">
+              Your Profile
+            </a>
+          ) : (
+            <a className="nav-link text-dark me-3" href="/login">
               Login
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-    </React.Fragment>
+            </a>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 };
