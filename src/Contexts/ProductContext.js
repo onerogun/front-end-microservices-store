@@ -11,8 +11,12 @@ export const ProductProvider = (props) => {
   const server = useContext(ServerContext);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(1);
   const [sortBy, setSortBy] = useState("itemPrice");
+  const [direction, setDirection] = useState(1);
+
+  const [minPriceFilter, setMinPriceFilter] = useState(0);
+  const [maxPriceFilter, setMaxPriceFilter] = useState(9999999);
 
   const [numberOfTotalPages, setNumberOfTotalPages] = useState();
 
@@ -23,6 +27,9 @@ export const ProductProvider = (props) => {
           pageNo: currentPage,
           pageSize: pageSize,
           sortBy: sortBy,
+          direction: direction,
+          min: minPriceFilter,
+          max: maxPriceFilter,
         },
       })
       .then((res) => {
@@ -34,19 +41,33 @@ export const ProductProvider = (props) => {
 
   useEffect(() => {
     FetchProducts();
-  }, [currentPage, pageSize, sortBy]);
+  }, [
+    currentPage,
+    pageSize,
+    sortBy,
+    direction,
+    minPriceFilter,
+    maxPriceFilter,
+  ]);
 
   return (
     <ProductContext.Provider
       value={[
         products,
+        setProducts,
         currentPage,
         setCurrentPage,
         pageSize,
         setPageSize,
         sortBy,
         setSortBy,
-        numberOfTotalPages
+        numberOfTotalPages,
+        direction,
+        setDirection,
+        minPriceFilter,
+        setMinPriceFilter,
+        maxPriceFilter,
+        setMaxPriceFilter,
       ]}
     >
       {props.children}

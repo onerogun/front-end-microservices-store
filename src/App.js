@@ -14,6 +14,8 @@ import { LoginSuccessProvider } from "./Contexts/LoginSuccessContext";
 import { CustomerProfileProvider } from "./Contexts/CustomerProfileContext";
 import { CustomerProfile } from "./Components/CustomerProfile";
 import { EditCustomerProfile } from "./Components/EditCustomerProfile";
+import { PasswordResetRequest } from "./Auth/PasswordResetRequest";
+import { PasswordReset } from "./Auth/PasswordReset";
 
 function App() {
   return (
@@ -43,6 +45,14 @@ function App() {
                   <Route
                     path="/edit-product-description/:itemId"
                     component={EditProductDescription}
+                  />
+                  <Route
+                    path="/passwordResetRequest"
+                    component={PasswordResetRequest}
+                  />
+                  <Route
+                    path="/passwordReset/:uuid"
+                    component={PasswordReset}
                   />
                 </Switch>
               </React.Fragment>

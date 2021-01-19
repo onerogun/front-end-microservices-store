@@ -6,6 +6,7 @@ import { FilterBar } from "../Components/FilterBar";
 export const Product = () => {
   const [
     products,
+    setProducts,
     currentPage,
     setCurrentPage,
     pageSize,
@@ -19,20 +20,51 @@ export const Product = () => {
   const [pageNumberArray, setPageNumberArray] = useState([]);
 
   //last page on pagination dashboard to update pageNumberArray when necessary
-  const [endOfPageSet, setEndOfPageSet] = useState(5);
-
-  if (currentPage >= endOfPageSet) {
+  const [endOfPageSet, setEndOfPageSet] = useState(4);
+  console.log(endOfPageSet + "ondof");
+  console.log(currentPage + "currrr");
+  console.log("curr arrr: " + pageNumberArray);
+  if (currentPage > endOfPageSet) {
+    console.log(endOfPageSet + "changingondof");
     setEndOfPageSet((prev) => prev + 5);
+  }
+
+  if (currentPage < endOfPageSet - 4) {
+    setEndOfPageSet((prev) => prev - 5);
   }
 
   useEffect(() => {
     var arr = [];
-    for (
-      let index = currentPage;
-      index < endOfPageSet && index < numberOfTotalPages;
-      index++
+    //If pressing prev and first element of pageNumberArray is bigger than or equal to current page number,
+    //load previous pages
+    if (endOfPageSet === currentPage && pageNumberArray[0] >= currentPage) {
+      for (
+        let index = endOfPageSet;
+        index >= endOfPageSet - 5 && index >= 0;
+        index--
+      ) {
+        arr.unshift(index);
+      }
+    } else if (
+      //If last page button is pressed
+      currentPage === numberOfTotalPages - 1 &&
+      pageNumberArray[pageNumberArray.length - 1] != currentPage
     ) {
-      arr.push(index);
+      for (
+        let index = numberOfTotalPages - 1;
+        index >= endOfPageSet - 5 && index >= 0;
+        index--
+      ) {
+        arr.unshift(index);
+      }
+    } else {
+      for (
+        let index = currentPage;
+        index <= endOfPageSet && index < numberOfTotalPages;
+        index++
+      ) {
+        arr.push(index);
+      }
     }
     setPageNumberArray(arr);
   }, [endOfPageSet, numberOfTotalPages]);
@@ -40,17 +72,17 @@ export const Product = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-2">
+        <div className="col-2 d-none d-lg-block">
           <div className="position-absolute start-0">
             <FilterBar />
           </div>
         </div>
-        <div className="col-10">
+        <div className="col-8 mx-auto">
           <div className="row ">
             {products.map((item) => {
               return (
                 <div
-                  className=" col-md-4 col-lg-3 col-sm-6 justify-content-center p-2 m-2 position-relative "
+                  className=" col-md-5 col-lg-3 col-sm-6 justify-content-center p-2 m-2 position-relative "
                   key={item.itemId}
                 >
                   <ProductCoverImage itemId={item.itemId} />
@@ -93,7 +125,7 @@ export const Product = () => {
                   </li>
 
                   <li
-                    hidden={currentPage < 6 ? true : false}
+                    hidden={currentPage < 5 ? true : false}
                     className="page-item"
                   >
                     <a
@@ -101,7 +133,7 @@ export const Product = () => {
                       href="#"
                       onClick={(e) => setCurrentPage(0)}
                     >
-                      1
+                      1...
                     </a>
                   </li>
 
@@ -127,7 +159,13 @@ export const Product = () => {
                   })}
 
                   <li
-                    hidden={numberOfTotalPages < 5 ? true : false}
+                    hidden={
+                      numberOfTotalPages < 5 ||
+                      currentPage === numberOfTotalPages - 1 ||
+                      endOfPageSet >= numberOfTotalPages - 1
+                        ? true
+                        : false
+                    }
                     className="page-item"
                   >
                     <a
