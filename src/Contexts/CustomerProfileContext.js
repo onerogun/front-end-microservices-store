@@ -24,7 +24,6 @@ export const CustomerProfileProvider = (props) => {
       axios
         .get(`${server}/customer/${sessionStorage.getItem("custFK")}`)
         .then((res) => {
-          console.log(res.data);
 
           axios
             .get(`${server}/auth/getUser/${res.data.userFK}`, {
@@ -33,7 +32,6 @@ export const CustomerProfileProvider = (props) => {
               },
             })
             .then((response) => {
-              console.log(response.data);
               setUserProfile(response.data);
             });
 
@@ -44,7 +42,9 @@ export const CustomerProfileProvider = (props) => {
   };
 
   return (
-    <CustomerProfileContext.Provider value={[customerProfile, userProfile]}>
+    <CustomerProfileContext.Provider
+      value={[customerProfile, userProfile, setCustomerProfile, setUserProfile]}
+    >
       {props.children}
     </CustomerProfileContext.Provider>
   );

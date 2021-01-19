@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext} from "react";
-import {ServerContext} from "../Contexts/ServerContext";
+import React, { useState, useEffect, useContext } from "react";
+import { ServerContext } from "../Contexts/ServerContext";
 import axios from "axios";
 
 //http://localhost:9191/items/getItemsPage?pageNo=0&pageSize=3&sortBy=itemId
@@ -7,22 +7,49 @@ import axios from "axios";
 export const ProductContext = React.createContext();
 
 export const ProductProvider = (props) => {
-    const[products, setProducts] = useState([]);
-    const server = useContext(ServerContext);
+  const [products, setProducts] = useState([]);
+  const server = useContext(ServerContext);
 
-    const FetchProducts = () => {
-        axios.get(`${server}/items/getItems`).then((res) => {
-        setProducts(res.data.itemList);
-        });
-    };
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [sortBy, setSortBy] = useState("itemPrice");
 
-    useEffect(() => {
-        FetchProducts();
-    }, [])
+  const [numberOfTotalPages, setNumberOfTotalPages] = useState();
 
-    return(
-        <ProductContext.Provider value={products} >
-            {props.children}
-        </ProductContext.Provider>
-    );
+  const FetchProducts = () => {
+    axios
+      .get(`${server}/items/getItemsPage`, {
+        params: {
+          pageNo: currentPage,
+          pageSize: pageSize,
+          sortBy: sortBy,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setProducts(res.data.data);
+        setNumberOfTotalPages(res.data.NumberOfTotalPages);
+      });
+  };
+
+  useEffect(() => {
+    FetchProducts();
+  }, [currentPage, pageSize, sortBy]);
+
+  return (
+    <ProductContext.Provider
+      value={[
+        products,
+        currentPage,
+        setCurrentPage,
+        pageSize,
+        setPageSize,
+        sortBy,
+        setSortBy,
+        numberOfTotalPages
+      ]}
+    >
+      {props.children}
+    </ProductContext.Provider>
+  );
 };

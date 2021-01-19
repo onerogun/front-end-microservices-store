@@ -4,7 +4,7 @@ import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 import axios from "axios";
 
-export const CustomerProfile = () => {
+export const CustomerProfile = (props) => {
   const server = useContext(ServerContext);
   const [loggedIn, setLoggedIn] = useContext(LoginSuccessContext);
   const [customerProfile, userProfile] = useContext(CustomerProfileContext);
@@ -25,6 +25,18 @@ export const CustomerProfile = () => {
           <a className="btn btn-primary" href="/edit-profile" role="button">
             Edit
           </a>
+          <button
+            className="btn btn-primary ms-2"
+            onClick={(e) => {
+              localStorage.removeItem("TokenJWT");
+              sessionStorage.removeItem("custFK");
+              setLoggedIn(false);
+              props.history.push("/");
+            }}
+            type="button"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>

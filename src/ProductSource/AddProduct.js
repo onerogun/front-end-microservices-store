@@ -3,7 +3,7 @@ import { ServerContext } from "../Contexts/ServerContext";
 import axios from "axios";
 import { UploadProductImage } from "./UploadProductImage";
 
-export const AddProduct = () => {
+export const AddProduct = (props) => {
   const server = useContext(ServerContext);
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState("0.0");
@@ -47,6 +47,7 @@ export const AddProduct = () => {
         console.log(response.data);
         setItemSaving(response.data);
         window.alert("Item saved!");
+        props.history.push("/");
       })
       .catch((err) => {
         console.log(err);
@@ -54,8 +55,7 @@ export const AddProduct = () => {
       });
   };
 
-  
-/*const savedItem = useMemo(() => {
+  /*const savedItem = useMemo(() => {
     console.log(itemSaving);
     return itemSaving;
   }, [itemSaving]);

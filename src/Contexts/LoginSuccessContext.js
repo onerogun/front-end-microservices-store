@@ -21,7 +21,6 @@ export const LoginSuccessProvider = (props) => {
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           console.log("logged in");
 
