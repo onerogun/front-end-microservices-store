@@ -18,17 +18,17 @@ export const FilterBar = () => {
     setMinPriceFilter,
     maxPriceFilter,
     setMaxPriceFilter,
+    searchProps,
   ] = useContext(ProductContext);
-  const [min, setMin] = useState();
-  const [max, setMax] = useState();
-  /*
-  useEffect(() => {
-    setPageSize(itemPerPage);
-  }, [itemPerPage]);
-*/
+  const [min, setMin] = useState(searchProps.current.min);
+  const [max, setMax] = useState(searchProps.current.max);
 
   function handleSubmit(e) {
     e.preventDefault();
+    searchProps.current.min = min;
+    searchProps.current.max = max;
+    sessionStorage.setItem("filter", JSON.stringify(searchProps.current));
+
     setMinPriceFilter(min);
     setMaxPriceFilter(max);
   }
@@ -43,7 +43,16 @@ export const FilterBar = () => {
             </label>
             <select
               value={pageSize}
-              onChange={(e) => setPageSize(e.target.value)}
+              onChange={(e) => {
+                searchProps.current.pageSize = e.target.value;
+                searchProps.current.pageNo = 0;
+                sessionStorage.setItem(
+                  "filter",
+                  JSON.stringify(searchProps.current)
+                );
+                setCurrentPage(searchProps.current.pageNo);
+                setPageSize(searchProps.current.pageSize);
+              }}
               class="form-select"
               id="inputGroupSelect02"
             >
@@ -62,7 +71,14 @@ export const FilterBar = () => {
             </label>
             <select
               value={direction}
-              onChange={(e) => setDirection(e.target.value)}
+              onChange={(e) => {
+                searchProps.current.direction = e.target.value;
+                sessionStorage.setItem(
+                  "filter",
+                  JSON.stringify(searchProps.current)
+                );
+                setDirection(searchProps.current.direction);
+              }}
               class="form-select"
               id="inputGroupSelect02"
             >

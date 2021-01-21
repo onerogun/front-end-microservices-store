@@ -1,6 +1,7 @@
 import { useState, useRef, useContext } from "react";
 import { ServerContext } from "../Contexts/ServerContext";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export const PasswordResetRequest = () => {
   const [email, setEmail] = useState();
@@ -57,13 +58,13 @@ export const PasswordResetRequest = () => {
               Submit
             </button>
 
-            <a
+            <Link
               className="btn btn-primary mr-2 float-end px-5"
-              href={`/login`}
+              to={`/login`}
               role="button"
             >
-              Sign In
-            </a>
+              Login
+            </Link>
           </div>
         </div>
       </form>

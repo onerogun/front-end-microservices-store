@@ -72,16 +72,18 @@ export const Images = (props) => {
   }
   //get 3 consequent pics and put in a list
   let listOf3DashImages;
-  if (imgs[firstIndex] != null) {
+
+  if (imgs.length > 0 && imgs[firstIndex] != null) {
     listOf3DashImages = [imgs[firstIndex]];
   }
-  if (imgs[(firstIndex + 1) % imgs.length] != null) {
+
+  if (imgs.length > 1 && imgs[(firstIndex + 1) % imgs.length] != null) {
     listOf3DashImages = [
       imgs[firstIndex],
       imgs[(firstIndex + 1) % imgs.length],
     ];
   }
-  if (imgs[(firstIndex + 2) % imgs.length] != null) {
+  if (imgs.length > 2 && imgs[(firstIndex + 2) % imgs.length] != null) {
     listOf3DashImages = [
       imgs[firstIndex],
       imgs[(firstIndex + 1) % imgs.length],
@@ -136,6 +138,7 @@ export const Images = (props) => {
         })}
         <a
           ref={prev}
+          hidden={imgs.length < 4 ? true : false}
           onClick={goPrev}
           class="carousel-control-prev"
           href="#carouselExampleIndicators"
@@ -150,6 +153,7 @@ export const Images = (props) => {
         </a>
         <a
           ref={next}
+          hidden={imgs.length < 4 ? true : false}
           onClick={goNext}
           class="carousel-control-next"
           href="#carouselExampleIndicators"

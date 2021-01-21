@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { ServerContext } from "../Contexts/ServerContext";
 import axios from "axios";
 
@@ -10,36 +10,45 @@ export const ProductProvider = (props) => {
   const [products, setProducts] = useState([]);
   const server = useContext(ServerContext);
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(1);
-  const [sortBy, setSortBy] = useState("itemPrice");
-  const [direction, setDirection] = useState(1);
+  //If filtered before and saved to session storage, use those props otherwise use default
+  const stored = sessionStorage.getItem("filter");
+  console.log(stored);
+  const searchProps = useRef(
+    stored
+      ? JSON.parse(stored)
+      : {
+          pageNo: 0,
+          pageSize: 1,
+          sortBy: "itemPrice",
+          direction: 1,
+          min: 0,
+          max: 9999999,
+        }
+  );
+  console.log(searchProps.current);
+  const [currentPage, setCurrentPage] = useState(searchProps.current.pageNo);
+  const [pageSize, setPageSize] = useState(searchProps.current.pageSize);
+  const [sortBy, setSortBy] = useState(searchProps.current.sortBy);
+  const [direction, setDirection] = useState(searchProps.current.direction);
 
-  const [minPriceFilter, setMinPriceFilter] = useState(0);
-  const [maxPriceFilter, setMaxPriceFilter] = useState(9999999);
+  const [minPriceFilter, setMinPriceFilter] = useState(searchProps.current.min);
+  const [maxPriceFilter, setMaxPriceFilter] = useState(searchProps.current.max);
 
   const [numberOfTotalPages, setNumberOfTotalPages] = useState();
 
-  const FetchProducts = () => {
-    axios
-      .get(`${server}/items/getItemsPage`, {
-        params: {
-          pageNo: currentPage,
-          pageSize: pageSize,
-          sortBy: sortBy,
-          direction: direction,
-          min: minPriceFilter,
-          max: maxPriceFilter,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setProducts(res.data.data);
-        setNumberOfTotalPages(res.data.NumberOfTotalPages);
-      });
-  };
-
   useEffect(() => {
+    const FetchProducts = () => {
+      console.log("fetching");
+      axios
+        .get(`${server}/items/getItemsPage`, {
+          params: searchProps.current,
+        })
+        .then((res) => {
+          console.log(res.data);
+          setProducts(res.data.data);
+          setNumberOfTotalPages(res.data.NumberOfTotalPages);
+        });
+    };
     FetchProducts();
   }, [
     currentPage,
@@ -49,6 +58,16 @@ export const ProductProvider = (props) => {
     minPriceFilter,
     maxPriceFilter,
   ]);
+
+  /*
+    currentPage,
+    pageSize,
+    sortBy,
+    direction,
+    minPriceFilter,
+    maxPriceFilter,
+
+  */
 
   return (
     <ProductContext.Provider
@@ -68,6 +87,7 @@ export const ProductProvider = (props) => {
         setMinPriceFilter,
         maxPriceFilter,
         setMaxPriceFilter,
+        searchProps,
       ]}
     >
       {props.children}

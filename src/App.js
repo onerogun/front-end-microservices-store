@@ -16,6 +16,8 @@ import { CustomerProfile } from "./Components/CustomerProfile";
 import { EditCustomerProfile } from "./Components/EditCustomerProfile";
 import { PasswordResetRequest } from "./Auth/PasswordResetRequest";
 import { PasswordReset } from "./Auth/PasswordReset";
+import { Cart } from "./Components/Cart";
+import  CartProvider  from "./Contexts/CartContext";
 
 function App() {
   return (
@@ -24,38 +26,41 @@ function App() {
         <LoginSuccessProvider>
           <CustomerProfileProvider>
             <ProductProvider>
-              <React.Fragment>
-                <NavBar />
-                <Switch>
-                  <Route exact path="/" component={Product} />
-                  <Route exact path="/login" component={Login} />
-                  <Route exact path="/profile" component={CustomerProfile} />
-                  <Route
-                    exact
-                    path="/edit-profile"
-                    component={EditCustomerProfile}
-                  />
-                  <Route path="/addProduct" component={AddProduct} />
-                  <Route path="/signUp" component={CustomerSignUp} />
-                  <Route path="/image/:itemId" component={Images} />
-                  <Route
-                    path="/product-details/:itemId"
-                    component={ProductDetails}
-                  />
-                  <Route
-                    path="/edit-product-description/:itemId"
-                    component={EditProductDescription}
-                  />
-                  <Route
-                    path="/passwordResetRequest"
-                    component={PasswordResetRequest}
-                  />
-                  <Route
-                    path="/passwordReset/:uuid"
-                    component={PasswordReset}
-                  />
-                </Switch>
-              </React.Fragment>
+              <CartProvider>
+                <React.Fragment>
+                  <NavBar />
+                  <Switch>
+                    <Route exact path="/" component={Product} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/profile" component={CustomerProfile} />
+                    <Route
+                      exact
+                      path="/edit-profile"
+                      component={EditCustomerProfile}
+                    />
+                    <Route path="/addProduct" component={AddProduct} />
+                    <Route path="/signUp" component={CustomerSignUp} />
+                    <Route path="/image/:itemId" component={Images} />
+                    <Route
+                      path="/product-details/:itemId"
+                      component={ProductDetails}
+                    />
+                    <Route
+                      path="/edit-product-description/:itemId"
+                      component={EditProductDescription}
+                    />
+                    <Route
+                      path="/passwordResetRequest"
+                      component={PasswordResetRequest}
+                    />
+                    <Route
+                      path="/passwordReset/:uuid"
+                      component={PasswordReset}
+                    />
+                    <Route exact path="/cart" component={Cart} />
+                  </Switch>
+                </React.Fragment>
+              </CartProvider>
             </ProductProvider>
           </CustomerProfileProvider>
         </LoginSuccessProvider>

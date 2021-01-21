@@ -4,6 +4,7 @@ import "./Login.css";
 import { ServerContext } from "../Contexts/ServerContext";
 import LoginModal from "../Components/LoginModal";
 import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
+import { Link } from "react-router-dom";
 
 /*setCookie("token", response.headers.authorization, {
     path: "/",
@@ -107,13 +108,20 @@ export const Login = (props) => {
               Login
             </button>
 
-            <a
+            <Link
               className="btn btn-primary mr-2 float-end px-5"
-              href={`/signUp`}
+              to={`/signUp`}
               role="button"
             >
               Sign Up
-            </a>
+            </Link>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-4 mx-auto mt-2">
+            <Link className="text-decoration-none" to="/passwordResetRequest">
+              Forgot Password?
+            </Link>
           </div>
         </div>
         <LoginModal isModalOpen={modalOpen} history={props.history} />

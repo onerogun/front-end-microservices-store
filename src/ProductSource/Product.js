@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { ProductContext } from "../Contexts/ProductContext";
 import { ProductCoverImage } from "./ProductCoverImage";
 import { FilterBar } from "../Components/FilterBar";
+import { Link } from "react-router-dom";
 
 export const Product = () => {
   const [
@@ -14,6 +15,13 @@ export const Product = () => {
     sortBy,
     setSortBy,
     numberOfTotalPages,
+    direction,
+    setDirection,
+    minPriceFilter,
+    setMinPriceFilter,
+    maxPriceFilter,
+    setMaxPriceFilter,
+    searchProps,
   ] = useContext(ProductContext);
 
   //Array to show page numbers on pagination and change current page
@@ -21,11 +29,7 @@ export const Product = () => {
 
   //last page on pagination dashboard to update pageNumberArray when necessary
   const [endOfPageSet, setEndOfPageSet] = useState(4);
-  console.log(endOfPageSet + "ondof");
-  console.log(currentPage + "currrr");
-  console.log("curr arrr: " + pageNumberArray);
   if (currentPage > endOfPageSet) {
-    console.log(endOfPageSet + "changingondof");
     setEndOfPageSet((prev) => prev + 5);
   }
 
@@ -92,8 +96,8 @@ export const Product = () => {
                   <p className="text-secondary fs-3 fw-normal">
                     {item.itemName}
                   </p>
-                  <a
-                    href={`/product-details/${item.itemId}`}
+                  <Link
+                    to={`/product-details/${item.itemId}`}
                     className="stretched-link"
                   />
                 </div>
@@ -109,32 +113,45 @@ export const Product = () => {
                       currentPage === 0 ? "page-item disabled" : "page-item"
                     }
                   >
-                    <a
+                    <Link
                       className="page-link"
-                      href="#"
+                      to="#"
                       tabindex="-1"
                       aria-disabled="true"
                       onClick={(e) => {
                         if (currentPage > 0) {
-                          setCurrentPage((prev) => prev - 1);
+                          searchProps.current.pageNo =
+                            searchProps.current.pageNo - 1;
+                          sessionStorage.setItem(
+                            "filter",
+                            JSON.stringify(searchProps.current)
+                          );
+                          setCurrentPage(searchProps.current.pageNo);
                         }
                       }}
                     >
                       Previous
-                    </a>
+                    </Link>
                   </li>
 
                   <li
                     hidden={currentPage < 5 ? true : false}
                     className="page-item"
                   >
-                    <a
+                    <Link
                       className="page-link"
-                      href="#"
-                      onClick={(e) => setCurrentPage(0)}
+                      to="#"
+                      onClick={(e) => {
+                        searchProps.current.pageNo = 0;
+                        sessionStorage.setItem(
+                          "filter",
+                          JSON.stringify(searchProps.current)
+                        );
+                        setCurrentPage(searchProps.current.pageNo);
+                      }}
                     >
                       1...
-                    </a>
+                    </Link>
                   </li>
 
                   {pageNumberArray.map((pageNum) => {
@@ -147,13 +164,20 @@ export const Product = () => {
                             : "page-item"
                         }
                       >
-                        <a
+                        <Link
                           className="page-link"
-                          href="#"
-                          onClick={(e) => setCurrentPage(pageNum)}
+                          to="#"
+                          onClick={(e) => {
+                            searchProps.current.pageNo = pageNum;
+                            sessionStorage.setItem(
+                              "filter",
+                              JSON.stringify(searchProps.current)
+                            );
+                            setCurrentPage(searchProps.current.pageNo);
+                          }}
                         >
                           {pageNum + 1}
-                        </a>
+                        </Link>
                       </li>
                     );
                   })}
@@ -168,13 +192,20 @@ export const Product = () => {
                     }
                     className="page-item"
                   >
-                    <a
+                    <Link
                       className="page-link"
-                      href="#"
-                      onClick={(e) => setCurrentPage(numberOfTotalPages - 1)}
+                      to="#"
+                      onClick={(e) => {
+                        searchProps.current.pageNo = numberOfTotalPages - 1;
+                        sessionStorage.setItem(
+                          "filter",
+                          JSON.stringify(searchProps.current)
+                        );
+                        setCurrentPage(searchProps.current.pageNo);
+                      }}
                     >
                       ...{numberOfTotalPages}
-                    </a>
+                    </Link>
                   </li>
                   <li
                     className={
@@ -183,17 +214,23 @@ export const Product = () => {
                         : "page-item"
                     }
                   >
-                    <a
+                    <Link
                       className="page-link"
-                      href="#"
+                      to="#"
                       onClick={(e) => {
                         if (currentPage < numberOfTotalPages - 1) {
-                          setCurrentPage((prev) => prev + 1);
+                          searchProps.current.pageNo =
+                            searchProps.current.pageNo + 1;
+                          sessionStorage.setItem(
+                            "filter",
+                            JSON.stringify(searchProps.current)
+                          );
+                          setCurrentPage(searchProps.current.pageNo);
                         }
                       }}
                     >
                       Next
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>

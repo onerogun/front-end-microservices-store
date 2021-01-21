@@ -2,13 +2,16 @@ import axios from "axios";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
 import { ServerContext } from "../Contexts/ServerContext";
+import { CartContext } from "../Contexts/CartContext";
 import "./navbar.css";
+import { Link } from "react-router-dom";
 
 export const NavBar = () => {
   const [loggedIn] = useContext(LoginSuccessContext);
   const [searchWord, setSearchWord] = useState();
   const server = useContext(ServerContext);
   const [searchResult, setSearchResult] = useState([]);
+  const [cart] = useContext(CartContext);
 
   const dropdownList = useRef();
 
@@ -45,24 +48,24 @@ export const NavBar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           Home
-        </a>
+        </Link>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a
+              <Link
                 className="nav-link text-dark"
                 aria-current="page"
-                href="/addProduct"
+                to="/addProduct"
               >
                 Add Product
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link text-dark" href="#">
+              <Link className="nav-link text-dark" to="#">
                 Link
-              </a>
+              </Link>
             </li>
           </ul>
 
@@ -98,12 +101,12 @@ export const NavBar = () => {
                   ? searchResult.map((item) => {
                       return (
                         <li key={item.itemId}>
-                          <a
+                          <Link
                             className="dropdown-item"
-                            href={`/product-details/${item.itemId}`}
+                            to={`/product-details/${item.itemId}`}
                           >
                             {item.itemName}
-                          </a>
+                          </Link>
                         </li>
                       );
                     })
@@ -113,14 +116,24 @@ export const NavBar = () => {
           </div>
 
           {loggedIn ? (
-            <a className="nav-link text-dark" href="/profile">
+            <Link className="nav-link text-dark" to="/profile">
               Your Profile
-            </a>
+            </Link>
           ) : (
-            <a className="nav-link text-dark me-3" href="/login">
+            <Link className="nav-link text-dark" to="/login">
               Login
-            </a>
+            </Link>
           )}
+
+          <Link
+            className="nav-link text-dark btn btn-primary position-relative me-2"
+            to="/cart"
+          >
+            Cart{" "}
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+              {cart.length} <span class="visually-hidden">unread messages</span>
+            </span>
+          </Link>
         </div>
       </div>
     </nav>
