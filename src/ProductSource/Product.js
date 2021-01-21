@@ -21,7 +21,6 @@ export const Product = () => {
     setMinPriceFilter,
     maxPriceFilter,
     setMaxPriceFilter,
-    searchProps,
   ] = useContext(ProductContext);
 
   //Array to show page numbers on pagination and change current page
@@ -81,12 +80,12 @@ export const Product = () => {
             <FilterBar />
           </div>
         </div>
-        <div className="col-8 mx-auto">
+        <div className="col-10 mx-auto">
           <div className="row ">
             {products.map((item) => {
               return (
                 <div
-                  className=" col-md-5 col-lg-3 col-sm-6 justify-content-center p-2 m-2 position-relative "
+                  className=" col-md-5 col-lg-2 col-sm-6 justify-content-center p-2 m-2 position-relative "
                   key={item.itemId}
                 >
                   <ProductCoverImage itemId={item.itemId} />
@@ -120,13 +119,7 @@ export const Product = () => {
                       aria-disabled="true"
                       onClick={(e) => {
                         if (currentPage > 0) {
-                          searchProps.current.pageNo =
-                            searchProps.current.pageNo - 1;
-                          sessionStorage.setItem(
-                            "filter",
-                            JSON.stringify(searchProps.current)
-                          );
-                          setCurrentPage(searchProps.current.pageNo);
+                          setCurrentPage((prev) => prev - 1);
                         }
                       }}
                     >
@@ -142,12 +135,7 @@ export const Product = () => {
                       className="page-link"
                       to="#"
                       onClick={(e) => {
-                        searchProps.current.pageNo = 0;
-                        sessionStorage.setItem(
-                          "filter",
-                          JSON.stringify(searchProps.current)
-                        );
-                        setCurrentPage(searchProps.current.pageNo);
+                        setCurrentPage(0);
                       }}
                     >
                       1...
@@ -168,12 +156,7 @@ export const Product = () => {
                           className="page-link"
                           to="#"
                           onClick={(e) => {
-                            searchProps.current.pageNo = pageNum;
-                            sessionStorage.setItem(
-                              "filter",
-                              JSON.stringify(searchProps.current)
-                            );
-                            setCurrentPage(searchProps.current.pageNo);
+                            setCurrentPage(pageNum);
                           }}
                         >
                           {pageNum + 1}
@@ -196,12 +179,7 @@ export const Product = () => {
                       className="page-link"
                       to="#"
                       onClick={(e) => {
-                        searchProps.current.pageNo = numberOfTotalPages - 1;
-                        sessionStorage.setItem(
-                          "filter",
-                          JSON.stringify(searchProps.current)
-                        );
-                        setCurrentPage(searchProps.current.pageNo);
+                        setCurrentPage(numberOfTotalPages - 1);
                       }}
                     >
                       ...{numberOfTotalPages}
@@ -219,13 +197,7 @@ export const Product = () => {
                       to="#"
                       onClick={(e) => {
                         if (currentPage < numberOfTotalPages - 1) {
-                          searchProps.current.pageNo =
-                            searchProps.current.pageNo + 1;
-                          sessionStorage.setItem(
-                            "filter",
-                            JSON.stringify(searchProps.current)
-                          );
-                          setCurrentPage(searchProps.current.pageNo);
+                          setCurrentPage((prev) => prev + 1);
                         }
                       }}
                     >

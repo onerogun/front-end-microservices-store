@@ -33,12 +33,19 @@ export const ProductCoverImage = (props) => {
   }
 
   if (!obj) {
-    return <img src={icon} className="card-img-top" alt="Product" />;
+    return (
+      <img
+        src={icon}
+        style={{ height: "15rem", width: "15rem" }}
+        className="img-fluid"
+        alt="Product"
+      />
+    );
   }
 
   return (
     <img
-    style={{ height: "20rem", width:"20rem" }}
+      style={{ height: "15rem", width: "15rem" }}
       alt="Product"
       className="img-fluid"
       src={`http://localhost:9696/storage/getItemFiles/${obj.itemId}/${obj.path}`}

@@ -4,11 +4,12 @@ import { Images } from "./Image";
 import { ServerContext } from "../Contexts/ServerContext";
 import { CartContext } from "../Contexts/CartContext";
 import { ProductContext } from "../Contexts/ProductContext";
+import { set } from "js-cookie";
 
 export const ProductDetails = (props) => {
   const [itemDetails, setItemDetails] = useState([]);
   const server = useContext(ServerContext);
-  const [cart, setCart] = useContext(CartContext);
+  const [cart, setCart, savedCart] = useContext(CartContext);
 
   const [
     products,
@@ -22,23 +23,40 @@ export const ProductDetails = (props) => {
     numberOfTotalPages,
   ] = useContext(ProductContext);
 
-  const [quantity, setQuantity] = useState(1);
+  const [itemAmount, setItemAmount] = useState(1);
 
   useEffect(() => {
     axios
       .get(`${server}/itemDetails/getItemDetails/${props.match.params.itemId}`)
       .then((res) => {
-        console.log(res.data.itemDetailsList);
         setItemDetails(res.data.itemDetailsList);
       });
   }, [props.match.params.itemId]);
 
   const item = products.find(
-    (item) => item.itemId == props.match.params.itemId
+    (item) => item.itemId === parseInt(props.match.params.itemId)
   );
 
-  function handleClick() {
-    setCart((prev) => [...prev, { itemId: item.itemId, quantity: quantity }]);
+  function handleAddToCart() {
+    const indexOfItem = cart.findIndex((order) => {
+      return order.itemId === item.itemId;
+    });
+
+    if (indexOfItem > -1) {
+      cart[indexOfItem].itemAmount =
+        parseInt(cart[indexOfItem].itemAmount) + itemAmount;
+      savedCart.current = cart;
+    } else {
+      savedCart.current = [
+        ...savedCart.current,
+        { itemId: item.itemId, itemAmount: itemAmount },
+      ];
+    }
+    localStorage.setItem("cartcontent", JSON.stringify(savedCart.current));
+    console.log(savedCart.current);
+
+    setCart([...savedCart.current]);
+    props.history.push("/cart");
   }
 
   return (
@@ -85,8 +103,8 @@ export const ProductDetails = (props) => {
           </label>
           <select
             id="selectqty"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
+            value={itemAmount}
+            onChange={(e) => setItemAmount(parseInt(e.target.value))}
           >
             <option selected value="1">
               1
@@ -105,7 +123,7 @@ export const ProductDetails = (props) => {
             </option>
           </select>
 
-          <button className="btn btn-primary" onClick={handleClick}>
+          <button className="btn btn-primary" onClick={handleAddToCart}>
             Add to Cart
           </button>
         </div>

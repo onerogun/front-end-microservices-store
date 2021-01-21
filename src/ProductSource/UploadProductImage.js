@@ -19,7 +19,7 @@ export const UploadProductImage = ({ itemId }) => {
      * After conversion destructure savedPics Ref and add newly converted image
      * change setPic to trigger re-render
      */
-    file.current.map((eachfile) => {
+    file.current.forEach((eachfile) => {
       let reader = new FileReader();
       reader.readAsDataURL(eachfile);
       reader.onload = () => {
@@ -43,7 +43,7 @@ export const UploadProductImage = ({ itemId }) => {
 
   const PostFiles = (fileArray, itemId) => {
     console.log(itemId);
-    fileArray.map((eachFileInArray) => {
+    fileArray.forEach((eachFileInArray) => {
       const formData = new FormData();
       formData.append("file", eachFileInArray);
       if (itemId != null) {

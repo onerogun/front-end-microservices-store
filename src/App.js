@@ -17,7 +17,8 @@ import { EditCustomerProfile } from "./Components/EditCustomerProfile";
 import { PasswordResetRequest } from "./Auth/PasswordResetRequest";
 import { PasswordReset } from "./Auth/PasswordReset";
 import { Cart } from "./Components/Cart";
-import  CartProvider  from "./Contexts/CartContext";
+import CartProvider from "./Contexts/CartContext";
+import { Orders } from "./Components/Orders";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
                       component={PasswordReset}
                     />
                     <Route exact path="/cart" component={Cart} />
+                    <Route exact path="/orders" component={Orders} />
                   </Switch>
                 </React.Fragment>
               </CartProvider>

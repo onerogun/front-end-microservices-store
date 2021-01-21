@@ -11,9 +11,8 @@ export const ProductProvider = (props) => {
   const server = useContext(ServerContext);
 
   //If filtered before and saved to session storage, use those props otherwise use default
-  const stored = sessionStorage.getItem("filter");
-  console.log(stored);
-  const searchProps = useRef(
+  // const stored = sessionStorage.getItem("filter");
+  /* const searchProps = useRef(
     stored
       ? JSON.parse(stored)
       : {
@@ -24,15 +23,15 @@ export const ProductProvider = (props) => {
           min: 0,
           max: 9999999,
         }
-  );
-  console.log(searchProps.current);
-  const [currentPage, setCurrentPage] = useState(searchProps.current.pageNo);
-  const [pageSize, setPageSize] = useState(searchProps.current.pageSize);
-  const [sortBy, setSortBy] = useState(searchProps.current.sortBy);
-  const [direction, setDirection] = useState(searchProps.current.direction);
+  );*/
+// console.log(searchProps.current);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageSize, setPageSize] = useState(1);
+  const [sortBy, setSortBy] = useState("itemPrice");
+  const [direction, setDirection] = useState(1);
 
-  const [minPriceFilter, setMinPriceFilter] = useState(searchProps.current.min);
-  const [maxPriceFilter, setMaxPriceFilter] = useState(searchProps.current.max);
+  const [minPriceFilter, setMinPriceFilter] = useState(0);
+  const [maxPriceFilter, setMaxPriceFilter] = useState(9999999);
 
   const [numberOfTotalPages, setNumberOfTotalPages] = useState();
 
@@ -41,7 +40,14 @@ export const ProductProvider = (props) => {
       console.log("fetching");
       axios
         .get(`${server}/items/getItemsPage`, {
-          params: searchProps.current,
+          params: {
+            pageNo: currentPage,
+            pageSize: pageSize,
+            sortBy: sortBy,
+            direction: direction,
+            min: minPriceFilter,
+            max: maxPriceFilter,
+          },
         })
         .then((res) => {
           console.log(res.data);
@@ -87,7 +93,6 @@ export const ProductProvider = (props) => {
         setMinPriceFilter,
         maxPriceFilter,
         setMaxPriceFilter,
-        searchProps,
       ]}
     >
       {props.children}
