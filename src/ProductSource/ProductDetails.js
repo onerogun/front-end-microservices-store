@@ -4,7 +4,6 @@ import { Images } from "./Image";
 import { ServerContext } from "../Contexts/ServerContext";
 import { CartContext } from "../Contexts/CartContext";
 import { ProductContext } from "../Contexts/ProductContext";
-import { set } from "js-cookie";
 
 export const ProductDetails = (props) => {
   const [itemDetails, setItemDetails] = useState([]);

@@ -3,11 +3,49 @@ import { ServerContext } from "../Contexts/ServerContext";
 import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 import axios from "axios";
+import { CartContext } from "../Contexts/CartContext";
 
 export const CustomerProfile = (props) => {
   const server = useContext(ServerContext);
-  const [loggedIn, setLoggedIn] = useContext(LoginSuccessContext);
-  const [customerProfile, userProfile] = useContext(CustomerProfileContext);
+  const [
+    loggedIn,
+    setLoggedIn,
+    customerFK,
+    setCustomerFK,
+    loginWithJWTSuccess,
+  ] = useContext(LoginSuccessContext);
+  const [
+    customerProfile,
+    userProfile,
+    setCustomerProfile,
+    setUserProfile,
+  ] = useContext(CustomerProfileContext);
+
+  const [
+    cart,
+    setCart,
+    savedCart,
+    cartOrderItems,
+    setCartOrderItems,
+    firstFetchDone,
+    setFirstFetchDone,
+  ] = useContext(CartContext);
+
+  function handleLogout() {
+    localStorage.removeItem("TokenJWT");
+    sessionStorage.removeItem("custFK");
+    localStorage.removeItem("cartcontent");
+    savedCart.current = [];
+    setCustomerProfile([]);
+    setUserProfile([]);
+    setCart([]);
+    setCartOrderItems([]);
+    setCustomerFK(null);
+    setFirstFetchDone(false);
+    setLoggedIn(false);
+
+    props.history.push("/");
+  }
 
   return (
     <div className="container mt-5">
@@ -27,12 +65,7 @@ export const CustomerProfile = (props) => {
           </a>
           <button
             className="btn btn-primary ms-2"
-            onClick={(e) => {
-              localStorage.removeItem("TokenJWT");
-              sessionStorage.removeItem("custFK");
-              setLoggedIn(false);
-              props.history.push("/");
-            }}
+            onClick={(e) => handleLogout()}
             type="button"
           >
             Logout

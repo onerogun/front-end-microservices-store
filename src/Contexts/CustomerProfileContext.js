@@ -9,7 +9,13 @@ export const CustomerProfileProvider = (props) => {
   const server = useContext(ServerContext);
   const [customerProfile, setCustomerProfile] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
-  const [loggedIn, setLoggedIn] = useContext(LoginSuccessContext);
+  const [
+    loggedIn,
+    setLoggedIn,
+    customerFK,
+    setCustomerFK,
+    loginWithJWTSuccess,
+  ] = useContext(LoginSuccessContext);
 
   useEffect(() => {
     fetchUserProfile();
@@ -19,10 +25,10 @@ export const CustomerProfileProvider = (props) => {
    * First get customer profile from customer-service , then get user profile using foreign key in
    *  returned customer object
    */
-  const fetchUserProfile = (props) => {
-    if (sessionStorage.getItem("custFK")) {
+  const fetchUserProfile = () => {
+    if (customerFK) {
       axios
-        .get(`${server}/customer/${sessionStorage.getItem("custFK")}`)
+        .get(`${server}/customer/${customerFK}`)
         .then((res) => {
 
           axios

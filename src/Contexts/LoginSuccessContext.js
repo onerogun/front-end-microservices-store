@@ -7,11 +7,14 @@ export const LoginSuccessContext = React.createContext();
 export const LoginSuccessProvider = (props) => {
   const server = useContext(ServerContext);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [customerFK, setCustomerFK] = useState(-1);
+  const [customerFK, setCustomerFK] = useState(null);
+  const [loginWithJWTSuccess, setLoginWithJWTSuccess] = useState(false);
 
   useEffect(() => {
-    checkAuthorization();
-  }, []);
+    if (localStorage.getItem("TokenJWT")) {
+      checkAuthorization();
+    }
+  }, [loggedIn]);
 
   const checkAuthorization = () => {
     axios
@@ -26,16 +29,25 @@ export const LoginSuccessProvider = (props) => {
 
           var FK = res.headers.cookie.replace("custFK=", "");
           console.log("FK: " + FK);
-          sessionStorage.setItem("custFK", FK);
+          // sessionStorage.setItem("custFK", FK);
           setCustomerFK(FK);
           setLoggedIn(true);
+          setLoginWithJWTSuccess(true);
         }
       })
       .catch((err) => console.log(err));
   };
 
   return (
-    <LoginSuccessContext.Provider value={[loggedIn, setLoggedIn]}>
+    <LoginSuccessContext.Provider
+      value={[
+        loggedIn,
+        setLoggedIn,
+        customerFK,
+        setCustomerFK,
+        loginWithJWTSuccess,
+      ]}
+    >
       {props.children}
     </LoginSuccessContext.Provider>
   );

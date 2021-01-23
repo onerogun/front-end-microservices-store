@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { ServerContext } from "../Contexts/ServerContext";
 import axios from "axios";
 import { CustomerProfileContext } from "./CustomerProfileContext";
+import { LoginSuccessContext } from "./LoginSuccessContext";
 
 export const CartContext = React.createContext();
 
@@ -14,30 +15,78 @@ const CartProvider = (props) => {
   const server = useContext(ServerContext);
   const [cartOrderItems, setCartOrderItems] = useState([]);
   const [customerProfile] = useContext(CustomerProfileContext);
+  const [
+    loggedIn,
+    setLoggedIn,
+    customerFK,
+    setCustomerFK,
+    loginWithJWTSuccess,
+  ] = useContext(LoginSuccessContext);
+  const [firstFetchDone, setFirstFetchDone] = useState(false);
+
+  console.log(firstFetchDone);
+  console.log(loggedIn);
 
   useEffect(() => {
-    var custId;
-    if (!customerProfile) {
-      custId = null;
+    console.log("firstfetch : " + firstFetchDone + customerFK);
+    if (loggedIn && !firstFetchDone && customerFK) {
+      axios
+        .get(`${server}/order/getSavedCartWithOrderContentList/${customerFK}`)
+        .then((res) => {
+          console.log(res.data);
+          localStorage.setItem(
+            "cartcontent",
+            JSON.stringify(res.data.orderContentList.orderContentList)
+          );
+          //savedCart.current = JSON.parse(localStorage.getItem("cartcontent"));
+          setCart(res.data.orderContentList.orderContentList);
+          setCartOrderItems(res.data.savedCart.orderItemList);
+          setFirstFetchDone(true);
+        })
+        .catch((err) => console.log(err));
     }
-    if (cart) {
-      console.log(cart);
+  }, [customerFK]);
+
+  useEffect(() => {
+    if (firstFetchDone && loggedIn) {
       axios
         .post(
-          `${server}/order/getCartDetails`,
+          `${server}/order/saveCart/${customerProfile.customerId}`,
           { orderContentList: cart },
-          {
-            headers: { "Content-Type": "application/json" },
-          }
+          { headers: { "Content-Type": "application/json" } }
         )
         .then((res) => setCartOrderItems(res.data))
         .catch((err) => console.log(err));
+    } else {
+      if (cart.length > 0) {
+        axios
+          .post(
+            `${server}/order/getCartDetails`,
+            { orderContentList: cart },
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          )
+          .then((res) => setCartOrderItems(res.data))
+          .catch((err) => console.log(err));
+      } else {
+        setCartOrderItems([]);
+      }
     }
-  }, [cart]);
+  }, [cart, customerProfile]);
 
-  
   return (
-    <CartContext.Provider value={[cart, setCart, savedCart, cartOrderItems]}>
+    <CartContext.Provider
+      value={[
+        cart,
+        setCart,
+        savedCart,
+        cartOrderItems,
+        setCartOrderItems,
+        firstFetchDone,
+        setFirstFetchDone,
+      ]}
+    >
       {props.children}
     </CartContext.Provider>
   );

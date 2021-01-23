@@ -72,7 +72,7 @@ export const Login = (props) => {
         <div className="row ">
           <div className="col-md-4 mx-auto">
             <label className="form-label" for="username">
-              Username
+              Username or EMail
             </label>
             <input
               autoFocus

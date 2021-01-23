@@ -4,14 +4,14 @@ import { ProductCoverImage } from "../ProductSource/ProductCoverImage";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 import { ServerContext } from "../Contexts/ServerContext";
 import axios from "axios";
+import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
 
 export const Cart = (props) => {
   const [cart, setCart, savedCart, cartOrderItems] = useContext(CartContext);
   const [taxRate, setTaxRate] = useState(10);
   const [customerProfile] = useContext(CustomerProfileContext);
   const server = useContext(ServerContext);
-
-  console.log(cartOrderItems);
+  const [loggedIn] = useContext(LoginSuccessContext);
 
   function calculateSubtotal() {
     if (cartOrderItems) {
@@ -38,24 +38,28 @@ export const Cart = (props) => {
   }
 
   function handlePlaceOrder() {
-    if (customerProfile && cart) {
-      console.log(cart);
-      axios
-        .post(
-          `${server}/order/${customerProfile.customerId}/placeOrder`,
-          { orderContentList: cart },
-          {
-            headers: { "Content-Type": "application/json" },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-          savedCart.current = null;
-          localStorage.removeItem("cartcontent");
-          setCart([]);
-          props.history.push("/orders");
-        })
-        .catch((err) => console.log(err));
+    if (!loggedIn) {
+      props.history.push("/login");
+    } else {
+      if (customerProfile && cart) {
+        console.log(cart);
+        axios
+          .post(
+            `${server}/order/${customerProfile.customerId}/placeOrder`,
+            { orderContentList: cart },
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          )
+          .then((res) => {
+            console.log(res);
+            savedCart.current = null;
+            localStorage.removeItem("cartcontent");
+            setCart([]);
+            props.history.push("/orders");
+          })
+          .catch((err) => console.log(err));
+      }
     }
   }
 
@@ -115,6 +119,7 @@ export const Cart = (props) => {
             className="btn btn-primary"
             type="button"
             onClick={handlePlaceOrder}
+            disabled={cartOrderItems.length < 1}
           >
             Place Order
           </button>
