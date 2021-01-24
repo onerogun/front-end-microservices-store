@@ -29,7 +29,11 @@ export const CustomerProfileProvider = (props) => {
     console.log("fetching profile");
     if (customerFK) {
       axios
-        .get(`${server}/customer/${customerFK}`)
+        .get(`${server}/customer/${customerFK}` , {
+          headers: {
+            Authorization: localStorage.getItem("TokenJWT"),
+          },
+        })
         .then((res) => {
           axios
             .get(`${server}/auth/getUser/${res.data.userFK}`, {

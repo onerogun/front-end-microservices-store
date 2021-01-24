@@ -70,7 +70,7 @@ export const Login = (props) => {
       </div>
       <form className="g-3 needs-validation " onSubmit={handleSubmit}>
         <div className="row ">
-          <div className="col-md-4 mx-auto">
+          <div className="col-md-3 mx-auto">
             <label className="form-label" for="username">
               Username or EMail
             </label>
@@ -85,7 +85,7 @@ export const Login = (props) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4 mx-auto">
+          <div className="col-md-3 mx-auto">
             <label className="form-label" for="password">
               Password
             </label>
@@ -98,27 +98,23 @@ export const Login = (props) => {
             />
           </div>
         </div>
-        <div className="row clearfix">
-          <div className="col-md-4 mx-auto mt-2 float-star">
+        <div className="row">
+          <div className="col-md-3 d-grid gap-2 d-md-block mx-auto mt-2">
             <button
-              className="btn btn-primary px-5"
+              className="btn btn-primary px-4"
               type="submit"
               disabled={!validateForm()}
             >
               Login
             </button>
 
-            <Link
-              className="btn btn-primary mr-2 float-end px-5"
-              to={`/signUp`}
-              role="button"
-            >
+            <Link className="btn btn-primary float-end px-4" to={`/signUp`} role="button">
               Sign Up
             </Link>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4 mx-auto mt-2">
+          <div className="col-md-3 mx-auto mt-2">
             <Link className="text-decoration-none" to="/passwordResetRequest">
               Forgot Password?
             </Link>

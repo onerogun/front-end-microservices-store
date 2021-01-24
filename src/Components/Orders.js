@@ -23,7 +23,11 @@ export const Orders = () => {
     if (customerProfile) {
       console.log("fetching");
       axios
-        .get(`${server}/order/${customerProfile.customerId}/getOrderList`)
+        .get(`${server}/order/${customerProfile.customerId}/getOrderList`, {
+          headers: {
+            Authorization: localStorage.getItem("TokenJWT"),
+          },
+        })
         .then((res) => {
           console.log(res.data);
           setOrders(res.data);

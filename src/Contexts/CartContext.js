@@ -24,11 +24,18 @@ const CartProvider = (props) => {
   ] = useContext(LoginSuccessContext);
   const [firstFetchDone, setFirstFetchDone] = useState(false);
 
+  /**
+   * When a user  LOGGED IN , get saved cart from server
+   */
   useEffect(() => {
     console.log("firstfetch : " + firstFetchDone + customerFK);
     if (loggedIn && !firstFetchDone && customerFK) {
       axios
-        .get(`${server}/order/getSavedCartWithOrderContentList/${customerFK}`)
+        .get(`${server}/order/getSavedCartWithOrderContentList/${customerFK}`, {
+          headers: {
+            Authorization: localStorage.getItem("TokenJWT"),
+          },
+        })
         .then((res) => {
           console.log(res.data);
           localStorage.setItem(
@@ -44,13 +51,24 @@ const CartProvider = (props) => {
     }
   }, [customerFK]);
 
+  /**
+   * If a user logged in, save cart changes to database and get orderitems
+   * otherwise, just get orderitems
+   */
+  console.log("token in cart" + localStorage.getItem("TokenJWT"));
+
   useEffect(() => {
     if (firstFetchDone && loggedIn) {
       axios
         .post(
           `${server}/order/saveCart/${customerProfile.customerId}`,
           { orderContentList: cart },
-          { headers: { "Content-Type": "application/json" } }
+          {
+            headers: {
+              Authorization: localStorage.getItem("TokenJWT"),
+              "Content-Type": "application/json",
+            },
+          }
         )
         .then((res) => setCartOrderItems(res.data))
         .catch((err) => console.log(err));

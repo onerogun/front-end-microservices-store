@@ -94,7 +94,7 @@ export const CustomerSignUp = (props) => {
     <Container>
       <Row className="justify-content-center mt-5">
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          <Col>
+          <Col className="col-6 mx-auto">
             <Form.Group size="lg" controlId="customerName">
               <Form.Label>Name </Form.Label>
               <Form.Control
@@ -114,7 +114,7 @@ export const CustomerSignUp = (props) => {
               />
             </Form.Group>
           </Col>
-          <Col>
+          <Col className="col-6 mx-auto">
             <Form.Group>
               <Form.Label>User Name </Form.Label>
               <Form.Control
@@ -125,7 +125,7 @@ export const CustomerSignUp = (props) => {
             </Form.Group>
 
             <Row>
-              <Col>
+              <Col className="col-6 mx-auto">
                 <Form.Group>
                   <Form.Label>Password </Form.Label>
                   <Form.Control
@@ -160,7 +160,13 @@ export const CustomerSignUp = (props) => {
               </Col>
             </Row>
 
-            <Button block size="lg" type="submit" disabled={!validateForm()}>
+            <Button
+              block
+              size="lg"
+              type="submit"
+              className="mt-2"
+              disabled={!validateForm()}
+            >
               Submit
             </Button>
           </Col>

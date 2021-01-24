@@ -49,7 +49,7 @@ export const PasswordResetRequest = () => {
         </div>
 
         <div className="row clearfix">
-          <div className="col-md-4 mx-auto mt-2 float-star">
+          <div className="col-md-4 d-grid gap-2 d-md-block mx-auto mt-2">
             <button
               className="btn btn-primary px-5"
               type="submit"
