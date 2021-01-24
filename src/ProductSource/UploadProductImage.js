@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 
-export const UploadProductImage = ({ itemId }) => {
+export const UploadProductImage = ({ itemId, newItemSaved, rerender }) => {
   //Keep files in memory to between re-renders, access and set files with .current property
   const file = useRef([]);
   //To trigger re-render
@@ -39,7 +39,7 @@ export const UploadProductImage = ({ itemId }) => {
       console.log(itemId + " not null");
       PostFiles(file.current, itemId);
     }
-  }, [itemId]);
+  }, [newItemSaved]);
 
   const PostFiles = (fileArray, itemId) => {
     console.log(itemId);
@@ -53,14 +53,19 @@ export const UploadProductImage = ({ itemId }) => {
               "Content-Type": "multipart/form-data",
             },
           })
-          .then((res) => console.log("file sent"))
+          .then((res) => {
+            console.log("file sent");
+
+            rerender((prev) => [...prev, 1]);
+          })
           .catch((err) => console.log(err));
+        file.current = [];
+        savedPics.current = [];
       }
     });
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-  console.log(pics);
   return (
     <div className="container">
       <div className="row row-cols-3 carousel slide">

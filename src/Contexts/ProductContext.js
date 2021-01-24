@@ -24,7 +24,7 @@ export const ProductProvider = (props) => {
           max: 9999999,
         }
   );*/
-// console.log(searchProps.current);
+  // console.log(searchProps.current);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(1);
   const [sortBy, setSortBy] = useState("itemPrice");
@@ -37,7 +37,6 @@ export const ProductProvider = (props) => {
 
   useEffect(() => {
     const FetchProducts = () => {
-      console.log("fetching");
       axios
         .get(`${server}/items/getItemsPage`, {
           params: {

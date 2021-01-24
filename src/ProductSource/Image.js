@@ -28,8 +28,8 @@ export const Images = (props) => {
         /**
          * For returned path list, load each image from server and add to (pics) Ref, destructure the Ref first and add loaded image
          */
-        res.data.pathObjList.map((pathObj) => {
-          const src = `${server}/storage/getItemFiles/${pathObj.itemId}/${pathObj.path}`;
+        res.data.pathList.map((path) => {
+          const src = `${server}/storage/getItemFiles/${props.itemId}/${path}`;
           var imageToLoad = new Image();
           imageToLoad.src = src;
           imageToLoad.onload = () => {

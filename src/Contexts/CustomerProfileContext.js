@@ -19,18 +19,18 @@ export const CustomerProfileProvider = (props) => {
 
   useEffect(() => {
     fetchUserProfile();
-  }, [loggedIn]);
+  }, [loginWithJWTSuccess]);
 
   /**
    * First get customer profile from customer-service , then get user profile using foreign key in
    *  returned customer object
    */
   const fetchUserProfile = () => {
+    console.log("fetching profile");
     if (customerFK) {
       axios
         .get(`${server}/customer/${customerFK}`)
         .then((res) => {
-
           axios
             .get(`${server}/auth/getUser/${res.data.userFK}`, {
               headers: {

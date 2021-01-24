@@ -4,6 +4,7 @@ import { Images } from "./Image";
 import { ServerContext } from "../Contexts/ServerContext";
 import { CartContext } from "../Contexts/CartContext";
 import { ProductContext } from "../Contexts/ProductContext";
+import { Link } from "react-router-dom";
 
 export const ProductDetails = (props) => {
   const [itemDetails, setItemDetails] = useState([]);
@@ -86,13 +87,18 @@ export const ProductDetails = (props) => {
                 : null}
             </tbody>
           </table>
-          <a
+          <Link
             className="btn btn-primary"
-            role="button"
-            href={`/edit-product-description/${props.match.params.itemId}`}
+            to={`/edit-product-description/${props.match.params.itemId}`}
           >
             Edit Item Properties
-          </a>
+          </Link>
+          <Link
+            className="btn btn-primary ms-5"
+            to={`/edit-pictures/${props.match.params.itemId}`}
+          >
+            Edit Pictures
+          </Link>
         </div>
         <div className="col-md-2 mt-2">
           <p className="fs-2">$ {item ? item.itemPrice : null}</p>

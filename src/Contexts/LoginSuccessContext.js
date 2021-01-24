@@ -46,6 +46,7 @@ export const LoginSuccessProvider = (props) => {
         customerFK,
         setCustomerFK,
         loginWithJWTSuccess,
+        setLoginWithJWTSuccess,
       ]}
     >
       {props.children}

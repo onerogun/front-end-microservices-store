@@ -13,6 +13,8 @@ export const AddProduct = (props) => {
 
   const [validated, setValidated] = useState(false);
 
+  const [newItemSaved, setNewItemSaved] = ([]);
+
   const handleSubmit = (event) => {
     const form = event.currentTarget;
 
@@ -46,6 +48,7 @@ export const AddProduct = (props) => {
         console.log("item sent to server");
         console.log(response.data);
         setItemSaving(response.data);
+        setNewItemSaved((prev) => [...prev, 1]);
         window.alert("Item saved!");
         props.history.push("/");
       })
@@ -155,7 +158,7 @@ export const AddProduct = (props) => {
           </div>
         </form>
         <div className="col-4 my-auto">
-          <UploadProductImage {...itemSaving} />
+          <UploadProductImage itemId={itemSaving.itemId} newItemSaved={newItemSaved} />
         </div>
       </div>
     </div>

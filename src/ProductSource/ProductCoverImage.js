@@ -16,9 +16,9 @@ export const ProductCoverImage = (props) => {
     axios
       .get(`${server}/items/getItemFileLocations/${props.itemId}`)
       .then((res) => {
-        //  console.log(res.data.pathObjList);
+        console.log(res.data);
         if (res.data != null) {
-          setPath(res.data.pathObjList);
+          setPath(res.data.pathList);
           setLoading(false);
         }
       })
@@ -48,7 +48,7 @@ export const ProductCoverImage = (props) => {
       style={{ height: "15rem", width: "15rem" }}
       alt="Product"
       className="img-fluid"
-      src={`http://localhost:9696/storage/getItemFiles/${obj.itemId}/${obj.path}`}
+      src={`http://localhost:9696/storage/getItemFiles/${props.itemId}/${obj}`}
     />
   );
 };

@@ -24,9 +24,6 @@ const CartProvider = (props) => {
   ] = useContext(LoginSuccessContext);
   const [firstFetchDone, setFirstFetchDone] = useState(false);
 
-  console.log(firstFetchDone);
-  console.log(loggedIn);
-
   useEffect(() => {
     console.log("firstfetch : " + firstFetchDone + customerFK);
     if (loggedIn && !firstFetchDone && customerFK) {

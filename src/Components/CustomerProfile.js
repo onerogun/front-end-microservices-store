@@ -13,6 +13,7 @@ export const CustomerProfile = (props) => {
     customerFK,
     setCustomerFK,
     loginWithJWTSuccess,
+    setLoginWithJWTSuccess,
   ] = useContext(LoginSuccessContext);
   const [
     customerProfile,
@@ -33,7 +34,6 @@ export const CustomerProfile = (props) => {
 
   function handleLogout() {
     localStorage.removeItem("TokenJWT");
-    sessionStorage.removeItem("custFK");
     localStorage.removeItem("cartcontent");
     savedCart.current = [];
     setCustomerProfile([]);
@@ -43,10 +43,11 @@ export const CustomerProfile = (props) => {
     setCustomerFK(null);
     setFirstFetchDone(false);
     setLoggedIn(false);
+    setLoginWithJWTSuccess(false);
 
     props.history.push("/");
   }
-
+  console.log("render profile");
   return (
     <div className="container mt-5">
       <div className="row row-cols-1 ">
