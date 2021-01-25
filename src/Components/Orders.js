@@ -46,8 +46,12 @@ export const Orders = () => {
 
   if (orders.length < 1) {
     return (
-      <div className="container">
-        <p>You don't have any orders!</p>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col mx-auto">
+            <p>You don't have any orders!</p>
+          </div>
+        </div>
       </div>
     );
   }
