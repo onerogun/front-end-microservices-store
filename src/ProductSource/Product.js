@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { ProductContext } from "../Contexts/ProductContext";
 import { ProductCoverImage } from "./ProductCoverImage";
 import { FilterBar } from "../Components/FilterBar";
@@ -72,6 +72,28 @@ export const Product = () => {
     setPageNumberArray(arr);
   }, [endOfPageSet, numberOfTotalPages]);
 
+  const [hoverArr, setHoverArr] = useState([]);
+
+  /**
+   * Create an array as same size as product array and set hovered to false
+   */
+  useEffect(() => {
+    var arry = [];
+    products.forEach((product) => {
+      arry.push(false);
+    });
+    setHoverArr((prev) => [...arry]);
+  }, [products]);
+
+  function mouseEntered(index) {
+    setHoverArr((prev) => [...prev, (prev[index] = true)]);
+  }
+
+  function mouseLeaved(index) {
+    setHoverArr((prev) => [...prev, (prev[index] = false)]);
+  }
+
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -80,11 +102,18 @@ export const Product = () => {
         </div>
         <div className="col-md-9 col-12">
           <div className="row ">
-            {products.map((item) => {
+            {products.map((item, index) => {
               return (
                 <div
-                  className=" col-md-5 col-lg-2 col-12 justify-content-center p-2 m-2 position-relative border border-light rounded-3 overflow-hidden"
+                  className={
+                    hoverArr[index]
+                      ? "col-md-5 col-lg-2 col-12 justify-content-center p-2 m-2 position-relative border border-primary rounded-3 overflow-hidden"
+                      : "col-md-5 col-lg-2 col-12 justify-content-center p-2 m-2 position-relative border border-light rounded-3 overflow-hidden"
+                  }
                   key={item.itemId}
+                  
+                  onMouseEnter={(e) => mouseEntered(index)}
+                  onMouseLeave={(e) => mouseLeaved(index)}
                 >
                   <ProductCoverImage itemId={item.itemId} />
                   <div className="text-secondary fs-4 mt-2">

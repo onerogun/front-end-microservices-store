@@ -61,6 +61,9 @@ export const CustomerProfile = (props) => {
           <p id="username">User Name: {userProfile.userName}</p>
         </div>
         <div className="col">
+          <p id="role">User Type: {userProfile.userRoles}</p>
+        </div>
+        <div className="col">
           <a className="btn btn-primary" href="/edit-profile" role="button">
             Edit
           </a>

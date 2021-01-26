@@ -2,6 +2,7 @@ import { useState, useContext, useMemo } from "react";
 import { ServerContext } from "../Contexts/ServerContext";
 import axios from "axios";
 import { UploadProductImage } from "./UploadProductImage";
+import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 
 export const AddProduct = (props) => {
   const server = useContext(ServerContext);
@@ -13,7 +14,14 @@ export const AddProduct = (props) => {
 
   const [validated, setValidated] = useState(false);
 
-  const [newItemSaved, setNewItemSaved] = ([]);
+  const [newItemSaved, setNewItemSaved] = useState([]);
+
+  const [
+    customerProfile,
+    userProfile,
+    setCustomerProfile,
+    setUserProfile,
+  ] = useContext(CustomerProfileContext);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -38,7 +46,7 @@ export const AddProduct = (props) => {
 
   const sendToServer = (product) => {
     axios
-      .post(`${server}/items/addItem`, newItem, {
+      .post(`${server}/items/addItem/${customerProfile.customerId}`, newItem, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("TokenJWT"),
@@ -158,7 +166,10 @@ export const AddProduct = (props) => {
           </div>
         </form>
         <div className="col-4 my-auto">
-          <UploadProductImage itemId={itemSaving.itemId} newItemSaved={newItemSaved} />
+          <UploadProductImage
+            itemId={itemSaving.itemId}
+            newItemSaved={newItemSaved}
+          />
         </div>
       </div>
     </div>

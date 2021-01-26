@@ -4,6 +4,7 @@ import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 import axios from "axios";
 import EditSuccessModal from "./EditSuccessModal";
+import { Link } from "react-router-dom";
 
 export const EditCustomerProfile = (props) => {
   const server = useContext(ServerContext);
@@ -36,8 +37,8 @@ export const EditCustomerProfile = (props) => {
     var currentUserName = userProfile.userName;
     const uProfile = {
       userId: userProfile.userId,
-      password: userProfile.password,
       userName: username,
+      userEMail: email,
       customerFK: userProfile.customerFK,
     };
 
@@ -145,6 +146,13 @@ export const EditCustomerProfile = (props) => {
             <button className="btn btn-primary" type="submit">
               Submit
             </button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col col-lg-6 col-md-8 col-sm-10 mx-auto mt-3">
+            <Link className="btn btn-primary" to="/profile">
+              Cancel
+            </Link>
           </div>
         </div>
       </form>

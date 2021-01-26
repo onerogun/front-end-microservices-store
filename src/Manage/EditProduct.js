@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Images } from "./Image";
+import { Images } from "../ProductSource/Image";
 import { ServerContext } from "../Contexts/ServerContext";
 import { CartContext } from "../Contexts/CartContext";
 import { ProductContext } from "../Contexts/ProductContext";
 import { Link } from "react-router-dom";
 
-export const ProductDetails = (props) => {
+export const EditProduct = (props) => {
   const [itemDetails, setItemDetails] = useState([]);
   const server = useContext(ServerContext);
   const [cart, setCart, savedCart] = useContext(CartContext);
@@ -37,28 +37,7 @@ export const ProductDetails = (props) => {
     (item) => item.itemId === parseInt(props.match.params.itemId)
   );
 
-  function handleAddToCart() {
-    const indexOfItem = cart.findIndex((order) => {
-      return order.itemId === item.itemId;
-    });
-
-    if (indexOfItem > -1) {
-      cart[indexOfItem].itemAmount =
-        parseInt(cart[indexOfItem].itemAmount) + itemAmount;
-      savedCart.current = cart;
-    } else {
-      savedCart.current = [
-        ...savedCart.current,
-        { itemId: item.itemId, itemAmount: itemAmount },
-      ];
-    }
-    localStorage.setItem("cartcontent", JSON.stringify(savedCart.current));
-    console.log(savedCart.current);
-
-    setCart([...savedCart.current]);
-    props.history.push("/cart");
-  }
-
+ 
   return (
     <div className="container">
       <div className="row">
@@ -87,38 +66,21 @@ export const ProductDetails = (props) => {
                 : null}
             </tbody>
           </table>
+          <Link
+            className="btn btn-primary"
+            to={`/edit-product-description/${props.match.params.itemId}`}
+          >
+            Edit Item Properties
+          </Link>
+          <Link
+            className="btn btn-primary ms-5"
+            to={`/edit-pictures/${props.match.params.itemId}`}
+          >
+            Edit Pictures
+          </Link>
         </div>
         <div className="col-md-2 mt-2">
           <p className="fs-2">$ {item ? item.itemPrice : null}</p>
-
-          <label className="form-label me-2" for="selectqty">
-            Quantity:
-          </label>
-          <select
-            id="selectqty"
-            value={itemAmount}
-            onChange={(e) => setItemAmount(parseInt(e.target.value))}
-          >
-            <option selected value="1">
-              1
-            </option>
-            <option selected value="2">
-              2
-            </option>
-            <option selected value="3">
-              3
-            </option>
-            <option selected value="4">
-              4
-            </option>
-            <option selected value="5">
-              5
-            </option>
-          </select>
-
-          <button className="btn btn-primary" onClick={handleAddToCart}>
-            Add to Cart
-          </button>
         </div>
       </div>
     </div>

@@ -9,6 +9,9 @@ export const CustomerProfileProvider = (props) => {
   const server = useContext(ServerContext);
   const [customerProfile, setCustomerProfile] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
+
+ // user: {"userId":50,"userName":"zz","userEMail":"zz@z.c","customerFK":36,"userRoles":"ADMIN"}
+
   const [
     loggedIn,
     setLoggedIn,
@@ -29,7 +32,7 @@ export const CustomerProfileProvider = (props) => {
     console.log("fetching profile");
     if (customerFK) {
       axios
-        .get(`${server}/customer/${customerFK}` , {
+        .get(`${server}/customer/getCustomer/${customerFK}`, {
           headers: {
             Authorization: localStorage.getItem("TokenJWT"),
           },
@@ -42,6 +45,7 @@ export const CustomerProfileProvider = (props) => {
               },
             })
             .then((response) => {
+              console.log("user: " + JSON.stringify(response.data));
               setUserProfile(response.data);
             });
 

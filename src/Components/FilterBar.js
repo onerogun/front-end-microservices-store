@@ -31,7 +31,7 @@ export const FilterBar = () => {
   return (
     <div className="row">
       <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect02">
+        <label class="input-group-text" for="inputGroupSelect1">
           Number of Items Each Page
         </label>
         <select
@@ -41,7 +41,7 @@ export const FilterBar = () => {
             setPageSize(e.target.value);
           }}
           class="form-select"
-          id="inputGroupSelect02"
+          id="inputGroupSelect1"
         >
           <option value="1" selected>
             1
@@ -53,7 +53,7 @@ export const FilterBar = () => {
       </div>
 
       <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect02">
+        <label class="input-group-text" for="inputGroupSelect2">
           Sort By
         </label>
         <select
@@ -63,7 +63,7 @@ export const FilterBar = () => {
             setDirection(e.target.value);
           }}
           class="form-select"
-          id="inputGroupSelect02"
+          id="inputGroupSelect2"
         >
           <option value="1" selected>
             Price: Low to High
@@ -73,12 +73,13 @@ export const FilterBar = () => {
       </div>
       <form noValidate onSubmit={handleSubmit}>
         <div className="input-group ">
-          <span className="input-group-text">Price$</span>
+          <label for="setmin" className="input-group-text">Price$</label>
           <input
             type="text"
             aria-label="Min Price"
             className="form-control"
             placeholder="Min"
+            id="setmin"
             value={min}
             onChange={(e) => {
               if (e.target.value) {

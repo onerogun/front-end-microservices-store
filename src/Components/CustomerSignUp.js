@@ -16,6 +16,7 @@ export const CustomerSignUp = (props) => {
   const [match, setMatch] = useState(true);
   const [firstCompare, setFirstCompare] = useState(true);
   const [validated, setValidated] = useState(false);
+  const [role, setRole] = useState();
 
   const compare = () => {
     if (passw !== confirmpassw) {
@@ -30,7 +31,7 @@ export const CustomerSignUp = (props) => {
     customerEMail: email,
     userName: username,
     password: passw,
-    roles: "PRIME_USER",
+    roles: role,
   };
 
   const handleSubmit = (event) => {
@@ -72,7 +73,8 @@ export const CustomerSignUp = (props) => {
       name.length > 0 &&
       passw.length >= 6 &&
       email.length > 0 &&
-      username.length > 0
+      username.length > 0 &&
+      role
     );
   };
 
@@ -159,7 +161,21 @@ export const CustomerSignUp = (props) => {
                 </Form.Group>
               </Col>
             </Row>
-
+            <div className="row">
+              <div className="col">
+                <select
+                  className="form-select"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  aria-label="Default select example"
+                >
+                  <option selected>Select User Role</option>
+                  <option value="PRIME_USER">Prime User</option>
+                  <option value="ADMIN">Admin</option>
+                  <option value="USER">User</option>
+                </select>
+              </div>
+            </div>
             <Button
               block
               size="lg"

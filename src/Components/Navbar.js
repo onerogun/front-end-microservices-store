@@ -5,6 +5,7 @@ import { ServerContext } from "../Contexts/ServerContext";
 import { CartContext } from "../Contexts/CartContext";
 import "./navbar.css";
 import { Link } from "react-router-dom";
+import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 
 export const NavBar = () => {
   const [loggedIn] = useContext(LoginSuccessContext);
@@ -12,7 +13,12 @@ export const NavBar = () => {
   const server = useContext(ServerContext);
   const [searchResult, setSearchResult] = useState([]);
   const [cart] = useContext(CartContext);
-
+  const [
+    customerProfile,
+    userProfile,
+    setCustomerProfile,
+    setUserProfile,
+  ] = useContext(CustomerProfileContext);
   const dropdownList = useRef();
 
   useEffect(() => {
@@ -53,22 +59,34 @@ export const NavBar = () => {
         </Link>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link
-                className="nav-link text-dark"
-                aria-current="page"
-                to="/addProduct"
-              >
-                Add Product
-              </Link>
-            </li>
-            <li className="nav-item">
+            <li
+              hidden={
+                userProfile.userRoles &&
+                userProfile.userRoles.indexOf("ADMIN") > -1
+                  ? true
+                  : false
+              }
+              className="nav-item"
+            >
               <Link className="nav-link text-dark" to="/orders">
                 Orders
               </Link>
             </li>
+            <li
+              hidden={
+                !userProfile.userRoles ||
+                (userProfile.userRoles &&
+                  userProfile.userRoles.indexOf("ADMIN") < 0)
+                  ? true
+                  : false
+              }
+              className="nav-item"
+            >
+              <Link className="nav-link text-dark" to="/manage-products">
+                Manage Products
+              </Link>
+            </li>
           </ul>
-
           <div className="dropdown">
             <form class="d-flex">
               <input
@@ -126,6 +144,12 @@ export const NavBar = () => {
           )}
 
           <Link
+            hidden={
+              userProfile.userRoles &&
+              userProfile.userRoles.indexOf("ADMIN") > -1
+                ? true
+                : false
+            }
             className="nav-link text-dark btn btn-primary position-relative me-2"
             to="/cart"
           >
