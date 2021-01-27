@@ -116,7 +116,10 @@ export const Product = () => {
                 >
                   <ProductCoverImage itemId={item.itemId} />
                   <div>
-                    <ItemRating itemId={item.itemId} />{" "}
+                    <ItemRating
+                      itemId={item.itemId}
+                      showNumberOfRaters={false}
+                    />{" "}
                   </div>
                   <div className="text-secondary fs-4 mt-2">
                     ${item.itemPrice}

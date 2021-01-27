@@ -62,7 +62,7 @@ export const Reviews = ({ itemId }) => {
     <div className="container">
       <h3>Product Reviews</h3>
       <p>
-        Rating: <ItemRating itemId={itemId} />{" "}
+        Rating: <ItemRating itemId={itemId} showNumberOfRaters={true} />{" "}
       </p>
       {reviews.map((eachReview, index) => {
         return (

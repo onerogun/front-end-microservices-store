@@ -68,7 +68,10 @@ export const ProductDetails = (props) => {
           <Images itemId={props.match.params.itemId} />
         </div>
         <div className="col-md-5 mt-2">
-          <ItemRating itemId={props.match.params.itemId} />
+          <ItemRating
+            itemId={props.match.params.itemId}
+            showNumberOfRaters={true}
+          />
           <table className="table">
             <thead>
               <tr>
