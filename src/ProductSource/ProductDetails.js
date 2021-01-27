@@ -5,6 +5,8 @@ import { ServerContext } from "../Contexts/ServerContext";
 import { CartContext } from "../Contexts/CartContext";
 import { ProductContext } from "../Contexts/ProductContext";
 import { Link } from "react-router-dom";
+import { Reviews } from "./Reviews";
+import { ItemRating } from "../Components/ItemRating";
 
 export const ProductDetails = (props) => {
   const [itemDetails, setItemDetails] = useState([]);
@@ -66,6 +68,7 @@ export const ProductDetails = (props) => {
           <Images itemId={props.match.params.itemId} />
         </div>
         <div className="col-md-5 mt-2">
+          <ItemRating itemId={props.match.params.itemId} />
           <table className="table">
             <thead>
               <tr>
@@ -119,6 +122,9 @@ export const ProductDetails = (props) => {
           <button className="btn btn-primary" onClick={handleAddToCart}>
             Add to Cart
           </button>
+        </div>
+        <div className="col-12">
+          <Reviews itemId={props.match.params.itemId} />
         </div>
       </div>
     </div>

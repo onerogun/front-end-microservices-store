@@ -23,6 +23,7 @@ import { EditPictures } from "./ProductSource/EditPictures";
 import { ManageProducts } from "./Manage/ManageProducts";
 import { EditProduct } from "./Manage/EditProduct";
 import { ManagedProductProvider } from "./Contexts/ManagedProductContext";
+import {WriteReview} from "./Components/WriteReview";
 
 function App() {
   return (
@@ -81,6 +82,10 @@ function App() {
                       <Route
                         path="/edit-product/:itemId"
                         component={EditProduct}
+                      />
+                      <Route
+                        path="/review-item/:itemId"
+                        component={WriteReview}
                       />
                     </Switch>
                   </React.Fragment>

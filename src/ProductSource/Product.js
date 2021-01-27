@@ -3,6 +3,7 @@ import { ProductContext } from "../Contexts/ProductContext";
 import { ProductCoverImage } from "./ProductCoverImage";
 import { FilterBar } from "../Components/FilterBar";
 import { Link } from "react-router-dom";
+import { ItemRating } from "../Components/ItemRating";
 
 export const Product = () => {
   const [
@@ -93,7 +94,6 @@ export const Product = () => {
     setHoverArr((prev) => [...prev, (prev[index] = false)]);
   }
 
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -111,11 +111,13 @@ export const Product = () => {
                       : "col-md-5 col-lg-2 col-12 justify-content-center p-2 m-2 position-relative border border-light rounded-3 overflow-hidden"
                   }
                   key={item.itemId}
-                  
                   onMouseEnter={(e) => mouseEntered(index)}
                   onMouseLeave={(e) => mouseLeaved(index)}
                 >
                   <ProductCoverImage itemId={item.itemId} />
+                  <div>
+                    <ItemRating itemId={item.itemId} />{" "}
+                  </div>
                   <div className="text-secondary fs-4 mt-2">
                     ${item.itemPrice}
                   </div>

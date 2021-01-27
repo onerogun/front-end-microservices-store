@@ -3,6 +3,7 @@ import axios from "axios";
 import { ServerContext } from "../Contexts/ServerContext";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
+import { Link } from "react-router-dom";
 
 export const Orders = () => {
   const server = useContext(ServerContext);
@@ -106,6 +107,9 @@ export const Orders = () => {
                     <div className="col-2">
                       <p> {orderItem.orderItemItemId}</p>
                     </div>
+                    <Link to={`/review-item/${orderItem.orderItemItemId}`}>
+                        Write a review
+                    </Link>
                   </div>
                 );
               })}

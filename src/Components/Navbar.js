@@ -87,9 +87,11 @@ export const NavBar = () => {
               </Link>
             </li>
           </ul>
+          
           <div className="dropdown">
             <form class="d-flex">
               <input
+              style={{width:"30rem"}}
                 className="form-control me-2"
                 value={searchWord}
                 onChange={(e) => {

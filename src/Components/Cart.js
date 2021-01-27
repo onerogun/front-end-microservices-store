@@ -48,7 +48,10 @@ export const Cart = (props) => {
             `${server}/order/${customerProfile.customerId}/placeOrder`,
             { orderContentList: cart },
             {
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("TokenJWT"),
+              },
             }
           )
           .then((res) => {
