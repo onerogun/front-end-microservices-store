@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { CartContext } from "../Contexts/CartContext";
-import { ProductCoverImage } from "../ProductSource/ProductCoverImage";
+import { ProductCoverImage } from "../Images/ProductCoverImage";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 import { ServerContext } from "../Contexts/ServerContext";
 import axios from "axios";

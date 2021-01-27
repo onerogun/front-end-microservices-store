@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ProductCoverImage } from "../ProductSource/ProductCoverImage";
+import { ProductCoverImage } from "../Images/ProductCoverImage";
 import { ManagedProductContext } from "../Contexts/ManagedProductContext";
 
 export const ManageProducts = () => {

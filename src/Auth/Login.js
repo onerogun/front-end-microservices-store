@@ -2,7 +2,7 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import axios from "axios";
 import "./Login.css";
 import { ServerContext } from "../Contexts/ServerContext";
-import LoginModal from "../Components/LoginModal";
+import LoginModal from "./LoginModal";
 import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
 import { Link } from "react-router-dom";
 

@@ -1,7 +1,7 @@
 import { useState, useContext, useMemo } from "react";
 import { ServerContext } from "../Contexts/ServerContext";
 import axios from "axios";
-import { UploadProductImage } from "./UploadProductImage";
+import { UploadProductImage } from "../Images/UploadProductImage";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 
 export const AddProduct = (props) => {

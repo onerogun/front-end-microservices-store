@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Images } from "./Image";
+import { Images } from "../Images/Image";
 import { ServerContext } from "../Contexts/ServerContext";
 import { CartContext } from "../Contexts/CartContext";
 import { ProductContext } from "../Contexts/ProductContext";
 import { Link } from "react-router-dom";
-import { Reviews } from "./Reviews";
+import { Reviews } from "../Review/Reviews";
 import { ItemRating } from "../Components/ItemRating";
 
 export const ProductDetails = (props) => {

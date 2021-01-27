@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { ProductContext } from "../Contexts/ProductContext";
-import { ProductCoverImage } from "./ProductCoverImage";
+import { ProductCoverImage } from "../Images/ProductCoverImage";
 import { FilterBar } from "../Components/FilterBar";
 import { Link } from "react-router-dom";
 import { ItemRating } from "../Components/ItemRating";

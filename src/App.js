@@ -5,25 +5,25 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { AddProduct } from "./ProductSource/AddProduct";
 import { ProductProvider } from "./Contexts/ProductContext";
 import { Login } from "./Auth/Login";
-import { CustomerSignUp } from "./Components/CustomerSignUp";
+import { CustomerSignUp } from "./SignUp/CustomerSignUp";
 import { NavBar } from "./Components/Navbar";
-import { Images } from "./ProductSource/Image";
+import { Images } from "./Images/Image";
 import { ProductDetails } from "./ProductSource/ProductDetails";
 import { EditProductDescription } from "./ProductSource/EditProductDescription";
 import { LoginSuccessProvider } from "./Contexts/LoginSuccessContext";
 import { CustomerProfileProvider } from "./Contexts/CustomerProfileContext";
-import { CustomerProfile } from "./Components/CustomerProfile";
-import { EditCustomerProfile } from "./Components/EditCustomerProfile";
+import { CustomerProfile } from "./Profile/CustomerProfile";
+import { EditCustomerProfile } from "./Profile/EditCustomerProfile";
 import { PasswordResetRequest } from "./Auth/PasswordResetRequest";
 import { PasswordReset } from "./Auth/PasswordReset";
-import { Cart } from "./Components/Cart";
+import { Cart } from "./Cart/Cart";
 import CartProvider from "./Contexts/CartContext";
-import { Orders } from "./Components/Orders";
-import { EditPictures } from "./ProductSource/EditPictures";
+import { Orders } from "./Orders/Orders";
+import { EditPictures } from "./Images/EditPictures";
 import { ManageProducts } from "./Manage/ManageProducts";
 import { EditProduct } from "./Manage/EditProduct";
 import { ManagedProductProvider } from "./Contexts/ManagedProductContext";
-import {WriteReview} from "./Components/WriteReview";
+import {WriteReview} from "./Review/WriteReview";
 
 function App() {
   return (

@@ -46,10 +46,6 @@ export const Images = (props) => {
   //Reference to the main img to change src with mainImage.current.src
   const mainImage = useRef();
 
-  //Used to connect to next and previous buttons
-  const prev = useRef();
-  const next = useRef();
-
   //first Index always 0
   const [firstIndex, setFirstIndex] = useState(0);
   const first = useRef(0);
@@ -137,7 +133,6 @@ export const Images = (props) => {
           );
         })}
         <a
-          ref={prev}
           hidden={imgs.length < 4 ? true : false}
           onClick={goPrev}
           class="carousel-control-prev"
@@ -152,7 +147,6 @@ export const Images = (props) => {
           <span class="visually-hidden">Previous</span>
         </a>
         <a
-          ref={next}
           hidden={imgs.length < 4 ? true : false}
           onClick={goNext}
           class="carousel-control-next"
