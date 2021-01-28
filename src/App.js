@@ -23,7 +23,8 @@ import { EditPictures } from "./Images/EditPictures";
 import { ManageProducts } from "./Manage/ManageProducts";
 import { EditProduct } from "./Manage/EditProduct";
 import { ManagedProductProvider } from "./Contexts/ManagedProductContext";
-import {WriteReview} from "./Review/WriteReview";
+import { WriteReview } from "./Review/WriteReview";
+import { Chat } from "./Components/Chat";
 
 function App() {
   return (
@@ -87,6 +88,7 @@ function App() {
                         path="/review-item/:itemId"
                         component={WriteReview}
                       />
+                      <Route exact path="/chat" component={Chat} />
                     </Switch>
                   </React.Fragment>
                 </CartProvider>
