@@ -16,26 +16,27 @@ export const Chat = (props) => {
 
   const [chat, setChat] = useState([]);
   const [sendMessage, setSendMessage] = useState([]);
-  /*
-  useEffect(() => {
-    var messageArr = [];
-    chat.forEach((each) => messageArr.push(""));
-    setSendMessage(messageArr);
-  }, [chat]);
-*/
+
+  /**
+   * first open websocket and subscribe to certain endpoints
+   */
   useEffect(() => {
     client.current.configure({
       brokerURL: "ws://localhost:7979//mywebsockets",
       onConnect: () => {
-        console.log("onConnect");
-        //   var url = client.ws._transport.url;
-        //   console.log("urll: " + url);
-
+        /**
+         * After connection accomplished,
+         * this first subscribe is to get back each sent message
+         */
         client.current.subscribe(`/user/queue/chat`, (message) => {
           console.log("sent msg: " + message.body);
           setConv((prev) => prev + "\n" + message.body);
         });
 
+        /**
+         * get list of previously subscribed topics
+         * and set in state
+         */
         client.current.subscribe(
           `/app/getTopics/${customerProfile.customerId}`,
           (message) => {
@@ -44,6 +45,10 @@ export const Chat = (props) => {
           }
         );
 
+        /**
+         * when a new topic opened, it is sent here and state updated
+         * then view is updated
+         */
         client.current.subscribe(
           `/queue/${customerProfile.customerId}`,
           (message) => {
@@ -58,16 +63,24 @@ export const Chat = (props) => {
 
   const arr = useRef([]);
 
+  /**
+   * When list of subscribed topics change, create new array for topics
+   * and details
+   */
   useEffect(() => {
-    console.log(subscribedTopics);
-
+    /**
+     * extract publisher and use it to open a new topic when replying
+     */
     subscribedTopics.forEach((topicName, index) => {
       var publisherIdDash = topicName.replace("Publisher:", "");
       var publisher = publisherIdDash.substring(
         0,
         publisherIdDash.indexOf("-")
       );
-
+      /**
+       * message is for incoming messages, sendMessage is for messages that will
+       * be sent by subscriber
+       */
       arr.current.push({
         topic: topicName,
         publisher: publisher,
@@ -104,8 +117,7 @@ export const Chat = (props) => {
   const clickJoin = () => {
     client.current.activate();
   };
-  console.log(chat);
-  console.log(sendMessage);
+
   return (
     <div>
       {chat.map((eachChat, index) => {
