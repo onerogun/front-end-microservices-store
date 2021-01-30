@@ -19,7 +19,6 @@ export const Orders = () => {
     }
   }, [customerProfile]);
 
-  console.log(customerProfile);
   const FetchOrders = () => {
     if (customerProfile) {
       console.log("fetching");
@@ -108,7 +107,10 @@ export const Orders = () => {
                       <p> {orderItem.orderItemItemId}</p>
                     </div>
                     <Link to={`/review-item/${orderItem.orderItemItemId}`}>
-                        Write a review
+                      Write a review
+                    </Link>
+                    <Link to={`/chat/${orderItem.orderItemOwner}`}>
+                      Send Message to the Seller{orderItem.orderItemOwner}
                     </Link>
                   </div>
                 );

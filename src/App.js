@@ -88,7 +88,7 @@ function App() {
                         path="/review-item/:itemId"
                         component={WriteReview}
                       />
-                      <Route exact path="/chat" component={Chat} />
+                      <Route path="/chat/:sendTo" component={Chat} />
                     </Switch>
                   </React.Fragment>
                 </CartProvider>
