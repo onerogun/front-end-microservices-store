@@ -86,12 +86,18 @@ export const NavBar = () => {
                 Manage Products
               </Link>
             </li>
+
+            <li hidden={loggedIn ? false : true} className="nav-item">
+              <Link className="nav-link text-dark" to="/chat/-1">
+                Messages
+              </Link>
+            </li>
           </ul>
-          
+
           <div className="dropdown">
             <form class="d-flex">
               <input
-              style={{width:"30rem"}}
+                style={{ width: "30rem" }}
                 className="form-control me-2"
                 value={searchWord}
                 onChange={(e) => {

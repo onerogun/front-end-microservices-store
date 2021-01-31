@@ -1,103 +1,28 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Client } from "@stomp/stompjs";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
+import { ChatArea } from "./ChatArea";
+import { ChatContext } from "../Contexts/ChatContext";
 
 export const Chat = (props) => {
-  var client = useRef(new Client());
-  const [conv, setConv] = useState("");
-  const [connnected, setConnected] = useState(false);
-  const [subscribedTopics, setSubscribedTopics] = useState([]);
+  const [
+    connected,
+    subscribedTopics,
+    chat,
+    setChat,
+    client,
+    arr,
+    setConnected,
+    chatIndex,
+    setChatIndex,
+  ] = useContext(ChatContext);
+
   const [
     customerProfile,
     userProfile,
     setCustomerProfile,
     setUserProfile,
   ] = useContext(CustomerProfileContext);
-
-  const [chat, setChat] = useState([]);
-  const [sendMessage, setSendMessage] = useState([]);
-
-  /**
-   * first open websocket and subscribe to certain endpoints
-   */
-  useEffect(() => {
-    client.current.configure({
-      brokerURL: "ws://localhost:7979//mywebsockets",
-      onConnect: () => {
-        /**
-         * After connection accomplished,
-         * this first subscribe is to get back each sent message
-         */
-        client.current.subscribe(`/user/queue/chat`, (message) => {
-          console.log("sent msg: " + message.body);
-          setConv((prev) => prev + "\n" + message.body);
-        });
-
-        /**
-         * get list of previously subscribed topics
-         * and set in state
-         */
-        client.current.subscribe(
-          `/app/getTopics/${customerProfile.customerId}`,
-          (message) => {
-            console.log("subd topics: " + message.body);
-            setSubscribedTopics(JSON.parse(message.body));
-          }
-        );
-
-        /**
-         * when a new topic opened, it is sent here and state updated
-         * then view is updated
-         */
-        client.current.subscribe(
-          `/queue/${customerProfile.customerId}`,
-          (message) => {
-            console.log("new topic added: " + JSON.stringify(message.body));
-            setSubscribedTopics(JSON.parse(message.body));
-          }
-        );
-        setConnected(true);
-      },
-    });
-  }, [customerProfile]);
-
-  const arr = useRef([]);
-
-  /**
-   * When list of subscribed topics change, create new array for topics
-   * and details
-   */
-  useEffect(() => {
-    /**
-     * extract publisher and use it to open a new topic when replying
-     */
-    subscribedTopics.forEach((topicName, index) => {
-      var publisherIdDash = topicName.replace("Publisher:", "");
-      var publisher = publisherIdDash.substring(
-        0,
-        publisherIdDash.indexOf("-")
-      );
-      /**
-       * message is for incoming messages, sendMessage is for messages that will
-       * be sent by subscriber
-       */
-      arr.current.push({
-        topic: topicName,
-        publisher: publisher,
-        message: "",
-        sendMessage: "",
-      });
-
-      client.current.subscribe(`/queue/${topicName}`, (message) => {
-        arr.current[index].message =
-          arr.current[index].message + "\n" + message.body;
-
-        console.log(arr.current);
-        setChat([...arr.current]);
-      });
-    });
-  }, [subscribedTopics]);
-
+  console.log("cusid: " + customerProfile.customerId);
   const clickHandler = (subscriber, message) => {
     client.current.publish({
       destination: "/app/chat",
@@ -111,6 +36,9 @@ export const Chat = (props) => {
 
   const handleDisconnect = () => {
     client.current.deactivate();
+    arr.current = [];
+    setChat([]);
+    setChatIndex(-1);
     setConnected(false);
   };
 
@@ -118,58 +46,98 @@ export const Chat = (props) => {
     client.current.activate();
   };
 
+  const [sendToUser, setSendToUser] = useState(0);
+
+  useEffect(() => {
+    if (props.match.params.sendTo) {
+      setSendToUser(props.match.params.sendTo);
+    }
+  }, [props.match.params.sendTo]);
+
+  console.log(chat);
+  console.log(chatIndex);
   return (
-    <div>
-      {chat.map((eachChat, index) => {
-        return (
-          <div className="row" key={index}>
-            <div className="col-5">
-              <div className="list-group">
-                <button
-                  type="button"
-                  className="list-group-item list-group-item-action"
-                  aria-current="true"
-                >
-                  {eachChat.publisher}
-                </button>
-              </div>
-            </div>
-            <div className="col-5">
-              <p>{eachChat.message}</p>
-              <input
-                type="text"
-                value={eachChat.sendMessage}
-                onChange={(e) => {
-                  arr.current[index].sendMessage = e.target.value;
-                  setChat([...arr.current]);
-                }}
-              ></input>
-              <button
-                disabled={connnected ? false : true}
-                onClick={(e) =>
-                  clickHandler(eachChat.publisher, eachChat.sendMessage)
-                }
-              >
-                Send to {eachChat.publisher}
-              </button>
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-3">
+          <div className="row">
+            <div className="col-12">
+              {chat.length > 0
+                ? chat.map((eachChat, index) => {
+                    return (
+                      <div className="row" key={index}>
+                        <div className="col-12">
+                          <div className="list-group">
+                            <button
+                              type="button"
+                              className={
+                                chatIndex === index
+                                  ? "list-group-item list-group-item-action active"
+                                  : "list-group-item list-group-item-action"
+                              }
+                              aria-current="true"
+                              onClick={(e) => setChatIndex(index)}
+                            >
+                              Message from: {eachChat.publisher}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                : null}
             </div>
           </div>
-        );
-      })}
-      <header className="App-header">
-        <p>{conv}</p>
-        <p>
-          <button onClick={(e) => clickJoin(e)}>Join</button>
-          <button
-            disabled={connnected ? false : true}
-            onClick={(e) => clickHandler(props.match.params.sendTo, "hi")}
-          >
-            Send to {props.match.params.sendTo}
-          </button>
 
-          <button onClick={(e) => handleDisconnect(e)}>Disconnect</button>
-        </p>
-      </header>
+          <div className="row">
+            <div className="col-12">
+              <hr />
+              {connected ? (
+                <button
+                  className="btn btn-primary"
+                  onClick={(e) => handleDisconnect(e)}
+                >
+                  Disconnect Websocket
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  onClick={(e) => clickJoin(e)}
+                >
+                  Connect Websocket
+                </button>
+              )}
+
+              <div className="row mt-2">
+                <div className="col-12">
+                  <div className="input-group mb-3">
+                    <input
+                      id="user"
+                      className="form-control"
+                      type="text"
+                      placeholder="User"
+                      value={sendToUser}
+                      onChange={(e) => setSendToUser(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary"
+                      aria-current="true"
+                      disabled={connected ? false : true}
+                      onClick={(e) => clickHandler(sendToUser, "")}
+                    >
+                      Start Chat
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-6 my-auto mx-auto">
+          {chatIndex > -1 ? <ChatArea /> : null}
+        </div>
+      </div>
     </div>
   );
 };
@@ -201,7 +169,7 @@ export const Chat = (props) => {
         );
       })}
       <header className="App-header">
-        <p>{conv}</p>
+        <p>{youSent}</p>
         <p>
           <button onClick={(e) => clickJoin(e)}>Join</button>
           <button
