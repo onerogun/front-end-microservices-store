@@ -24,7 +24,7 @@ import { ManageProducts } from "./Manage/ManageProducts";
 import { EditProduct } from "./Manage/EditProduct";
 import { ManagedProductProvider } from "./Contexts/ManagedProductContext";
 import { WriteReview } from "./Review/WriteReview";
-import { Chat } from "./Components/Chat";
+import { Chat } from "./Chat/Chat";
 import { ChatProvider } from "./Contexts/ChatContext";
 
 function App() {

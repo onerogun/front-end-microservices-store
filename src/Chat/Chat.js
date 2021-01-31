@@ -59,7 +59,7 @@ export const Chat = (props) => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-3">
+        <div className="col-lg-3 col-md-10">
           <div className="row">
             <div className="col-12">
               {chat.length > 0
@@ -134,7 +134,7 @@ export const Chat = (props) => {
             </div>
           </div>
         </div>
-        <div className="col-6 my-auto mx-auto">
+        <div className="col-lg-6 col-md-10 my-auto mx-auto">
           {chatIndex > -1 ? <ChatArea /> : null}
         </div>
       </div>

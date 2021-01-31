@@ -108,7 +108,11 @@ export const Login = (props) => {
               Login
             </button>
 
-            <Link className="btn btn-primary float-end px-4" to={`/signUp`} role="button">
+            <Link
+              className="btn btn-primary float-end px-4"
+              to={`/signUp`}
+              role="button"
+            >
               Sign Up
             </Link>
           </div>

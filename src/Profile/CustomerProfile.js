@@ -2,8 +2,9 @@ import React, { useState, useContext, useEffect } from "react";
 import { ServerContext } from "../Contexts/ServerContext";
 import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
-import axios from "axios";
 import { CartContext } from "../Contexts/CartContext";
+import { ChatContext } from "../Contexts/ChatContext";
+import { Client } from "@stomp/stompjs";
 
 export const CustomerProfile = (props) => {
   const server = useContext(ServerContext);
@@ -32,6 +33,20 @@ export const CustomerProfile = (props) => {
     setFirstFetchDone,
   ] = useContext(CartContext);
 
+  const [
+    connected,
+    subscribedTopics,
+    chat,
+    setChat,
+    client,
+    arr,
+    setConnected,
+    chatIndex,
+    setChatIndex,
+    ,
+    setSubscribedTopics,
+  ] = useContext(ChatContext);
+
   function handleLogout() {
     localStorage.removeItem("TokenJWT");
     localStorage.removeItem("cartcontent");
@@ -40,6 +55,12 @@ export const CustomerProfile = (props) => {
     setUserProfile([]);
     setCart([]);
     setCartOrderItems([]);
+    client.current = new Client();
+    setConnected(false);
+    setChatIndex(-1);
+    arr.current = [];
+    setChat([]);
+    setSubscribedTopics([]);
     setCustomerFK(null);
     setFirstFetchDone(false);
     setLoggedIn(false);
