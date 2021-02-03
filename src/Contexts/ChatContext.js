@@ -45,7 +45,9 @@ export const ChatProvider = (props) => {
             `/app/getTopics/${customerProfile.customerId}`,
             (message) => {
               console.log("subd topics: " + message.body);
-              setSubscribedTopics(JSON.parse(message.body));
+              if (message.body) {
+                setSubscribedTopics(JSON.parse(message.body));
+              }
             }
           );
 
@@ -185,7 +187,8 @@ export const ChatProvider = (props) => {
         setConnected,
         chatIndex,
         setChatIndex,
-        , setSubscribedTopics
+        ,
+        setSubscribedTopics,
       ]}
     >
       {props.children}
