@@ -25,14 +25,14 @@ export const ProductCoverImage = (props) => {
       .catch((err) => console.log(err));
   };
 
-  let obj;
+  let firstPicPath;
   if (!loading) {
     if (path != null) {
-      obj = path[0];
+      firstPicPath = path[0];
     }
   }
 
-  if (!obj) {
+  if (!firstPicPath) {
     return (
       <img
         src={icon}
@@ -43,12 +43,16 @@ export const ProductCoverImage = (props) => {
     );
   }
 
+  console.log("path:" + firstPicPath);
+  console.log("itemid: " +props.itemId)
+
+
   return (
     <img
       style={{ height: "15rem", width: "15rem" }}
       alt="Product"
       className="img-fluid"
-      src={`http://localhost:9696/storage/getItemFiles/${props.itemId}/${obj}`}
+      src={`${server}/storage/getItemFiles/${props.itemId}/${firstPicPath}`}
     />
   );
 };

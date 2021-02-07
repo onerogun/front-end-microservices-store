@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { Client } from "@stomp/stompjs";
 import { CustomerProfileContext } from "./CustomerProfileContext";
 import { LoginSuccessContext } from "./LoginSuccessContext";
+import { ServerContext } from "./ServerContext";
 
 export const ChatContext = React.createContext();
 
@@ -9,6 +10,7 @@ export const ChatProvider = (props) => {
   const client = useRef(new Client());
   const [connected, setConnected] = useState(false);
   const [subscribedTopics, setSubscribedTopics] = useState([]);
+  const server = useContext(ServerContext);
   const [
     customerProfile,
     userProfile,
@@ -34,13 +36,16 @@ export const ChatProvider = (props) => {
    */
   useEffect(() => {
     if (loggedIn && customerProfile) {
+      console.log("trying to connect");
+      let srvr = server.replace("http://", "");
       client.current.configure({
-        brokerURL: "ws://localhost:7979//mywebsockets",
+        brokerURL: `ws://${srvr}/mywebsockets`,
         onConnect: () => {
           /**
            * get list of previously subscribed topics
            * and set in state
            */
+          console.log("connected!!! ");
           client.current.subscribe(
             `/app/getTopics/${customerProfile.customerId}`,
             (message) => {
