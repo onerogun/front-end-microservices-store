@@ -1,6 +1,13 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  useContext,
+} from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
+import { ServerContext } from "../Contexts/ServerContext";
 
 export const UploadProductImage = ({ itemId, newItemSaved, rerender }) => {
   //Keep files in memory to between re-renders, access and set files with .current property
@@ -9,6 +16,8 @@ export const UploadProductImage = ({ itemId, newItemSaved, rerender }) => {
   const [pics, setPics] = useState([]);
   //Convert files to images and store
   const savedPics = useRef([]);
+
+  const server = useContext(ServerContext);
 
   const onDrop = useCallback((acceptedFiles) => {
     file.current = acceptedFiles;
@@ -48,7 +57,7 @@ export const UploadProductImage = ({ itemId, newItemSaved, rerender }) => {
       formData.append("file", eachFileInArray);
       if (itemId != null) {
         axios
-          .post(`http://localhost:9191/storage/save/${itemId}`, formData, {
+          .post(`${server}/storage/save/${itemId}`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },

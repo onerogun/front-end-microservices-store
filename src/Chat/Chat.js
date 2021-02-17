@@ -114,6 +114,7 @@ export const Chat = (props) => {
                     <input
                       id="user"
                       className="form-control"
+                      placeholder="User Id"
                       type="text"
                       placeholder="User"
                       value={sendToUser}

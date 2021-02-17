@@ -147,7 +147,7 @@ export const Product = () => {
                     <Link
                       className="page-link"
                       to="#"
-                      tabindex="-1"
+                      tabIndex="-1"
                       aria-disabled="true"
                       onClick={(e) => {
                         if (currentPage > 0) {

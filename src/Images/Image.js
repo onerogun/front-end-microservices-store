@@ -135,7 +135,7 @@ export const Images = (props) => {
         <a
           hidden={imgs.length < 4 ? true : false}
           onClick={goPrev}
-          class="carousel-control-prev"
+          className="carousel-control-prev"
           href="#carouselExampleIndicators"
           role="button"
           data-bs-slide="prev"
@@ -144,21 +144,21 @@ export const Images = (props) => {
             class="carousel-control-prev-icon bg-dark"
             aria-hidden="true"
           ></span>
-          <span class="visually-hidden">Previous</span>
+          <span className="visually-hidden">Previous</span>
         </a>
         <a
           hidden={imgs.length < 4 ? true : false}
           onClick={goNext}
-          class="carousel-control-next"
+          className="carousel-control-next"
           href="#carouselExampleIndicators"
           role="button"
           data-bs-slide="next"
         >
           <span
-            class="carousel-control-next-icon bg-dark"
+            className="carousel-control-next-icon bg-dark"
             aria-hidden="true"
           ></span>
-          <span class="visually-hidden">Next</span>
+          <span className="visually-hidden">Next</span>
         </a>
       </div>
     </div>

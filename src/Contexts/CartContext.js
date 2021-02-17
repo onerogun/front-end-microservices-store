@@ -30,6 +30,9 @@ const CartProvider = (props) => {
   useEffect(() => {
     console.log("firstfetch : " + firstFetchDone + customerFK);
     if (loggedIn && !firstFetchDone && customerFK) {
+      console.log(
+        "<<<<<<<<<<<<<<<<<doin first fetch>>>>>>>>>>>>>>>>>>>>>>><<<<"
+      );
       axios
         .get(`${server}/order/getSavedCartWithOrderContentList/${customerFK}`, {
           headers: {
@@ -45,9 +48,10 @@ const CartProvider = (props) => {
           //savedCart.current = JSON.parse(localStorage.getItem("cartcontent"));
           setCart(res.data.orderContentList.orderContentList);
           setCartOrderItems(res.data.savedCart.orderItemList);
-          setFirstFetchDone(true);
         })
         .catch((err) => console.log(err));
+      console.log("SETTING FIRST FETCH DONE TRUE");
+      setFirstFetchDone(true);
     }
   }, [customerFK]);
 
@@ -56,6 +60,7 @@ const CartProvider = (props) => {
    * otherwise, just get orderitems
    */
   console.log("token in cart" + localStorage.getItem("TokenJWT"));
+  console.log("firstFetchDone: " + firstFetchDone + " loggedIn: " + loggedIn);
 
   useEffect(() => {
     if (firstFetchDone && loggedIn) {

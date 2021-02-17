@@ -95,7 +95,7 @@ export const NavBar = () => {
           </ul>
 
           <div className="dropdown">
-            <form class="d-flex">
+            <form className="d-flex">
               <input
                 style={{ width: "30rem" }}
                 className="form-control me-2"
@@ -110,7 +110,7 @@ export const NavBar = () => {
               />
 
               <button
-                class="btn btn-outline-success"
+                className="btn btn-outline-success"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
@@ -162,8 +162,9 @@ export const NavBar = () => {
             to="/cart"
           >
             Cart{" "}
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-              {cart.length} <span class="visually-hidden">unread messages</span>
+            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+              {cart.length}{" "}
+              <span className="visually-hidden">unread messages</span>
             </span>
           </Link>
         </div>

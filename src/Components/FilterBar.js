@@ -30,8 +30,8 @@ export const FilterBar = () => {
 
   return (
     <div className="row">
-      <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect1">
+      <div className="input-group mb-3">
+        <label className="input-group-text" for="inputGroupSelect1">
           Number of Items Each Page
         </label>
         <select
@@ -40,10 +40,10 @@ export const FilterBar = () => {
             setCurrentPage(0);
             setPageSize(e.target.value);
           }}
-          class="form-select"
+          className="form-select"
           id="inputGroupSelect1"
         >
-          <option value="1" selected>
+          <option value="1" defaultValue>
             1
           </option>
           <option value="2">2</option>
@@ -52,8 +52,8 @@ export const FilterBar = () => {
         </select>
       </div>
 
-      <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect2">
+      <div className="input-group mb-3">
+        <label className="input-group-text" for="inputGroupSelect2">
           Sort By
         </label>
         <select
@@ -62,10 +62,10 @@ export const FilterBar = () => {
             setCurrentPage(0);
             setDirection(e.target.value);
           }}
-          class="form-select"
+          className="form-select"
           id="inputGroupSelect2"
         >
-          <option value="1" selected>
+          <option value="1" defaultValue>
             Price: Low to High
           </option>
           <option value="2">Price: High to Low</option>
@@ -73,7 +73,9 @@ export const FilterBar = () => {
       </div>
       <form noValidate onSubmit={handleSubmit}>
         <div className="input-group ">
-          <label for="setmin" className="input-group-text">Price$</label>
+          <label className="input-group-text" for="setmin">
+            Price$
+          </label>
           <input
             type="text"
             aria-label="Min Price"
