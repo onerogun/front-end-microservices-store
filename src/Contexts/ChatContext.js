@@ -11,25 +11,25 @@ export const ChatProvider = (props) => {
   const [connected, setConnected] = useState(false);
   const [subscribedTopics, setSubscribedTopics] = useState([]);
   const server = useContext(ServerContext);
-  const [
+  const {
     customerProfile,
     userProfile,
     setCustomerProfile,
     setUserProfile,
-  ] = useContext(CustomerProfileContext);
+  } = useContext(CustomerProfileContext);
 
   const arr = useRef([]);
   const [chat, setChat] = useState([]);
 
   const [chatIndex, setChatIndex] = useState(-1);
 
-  const [
+  const {
     loggedIn,
     setLoggedIn,
     customerFK,
     setCustomerFK,
     loginWithJWTSuccess,
-  ] = useContext(LoginSuccessContext);
+  } = useContext(LoginSuccessContext);
 
   /**
    * first open websocket and subscribe to certain endpoints
@@ -182,7 +182,7 @@ export const ChatProvider = (props) => {
 
   return (
     <ChatContext.Provider
-      value={[
+      value={{
         connected,
         subscribedTopics,
         chat,
@@ -192,9 +192,9 @@ export const ChatProvider = (props) => {
         setConnected,
         chatIndex,
         setChatIndex,
-        ,
+
         setSubscribedTopics,
-      ]}
+      }}
     >
       {props.children}
     </ChatContext.Provider>

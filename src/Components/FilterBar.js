@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { ProductContext } from "../Contexts/ProductContext";
 
 export const FilterBar = () => {
-  const [
+  const {
     products,
     setProducts,
     currentPage,
@@ -18,7 +18,7 @@ export const FilterBar = () => {
     setMinPriceFilter,
     maxPriceFilter,
     setMaxPriceFilter,
-  ] = useContext(ProductContext);
+  } = useContext(ProductContext);
   const [min, setMin] = useState();
   const [max, setMax] = useState();
 

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { ItemRating } from "../Components/ItemRating";
 
 export const Product = () => {
-  const [
+  const {
     products,
     setProducts,
     currentPage,
@@ -22,7 +22,7 @@ export const Product = () => {
     setMinPriceFilter,
     maxPriceFilter,
     setMaxPriceFilter,
-  ] = useContext(ProductContext);
+  } = useContext(ProductContext);
 
   //Array to show page numbers on pagination and change current page
   const [pageNumberArray, setPageNumberArray] = useState([]);

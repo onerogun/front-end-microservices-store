@@ -26,7 +26,7 @@ export const PathProvider = (props) => {
   };
 
   return (
-    <PathContext.Provider value={[path, loading]}>
+    <PathContext.Provider value={{ path, loading }}>
       {props.children}
     </PathContext.Provider>
   );

@@ -16,7 +16,7 @@ export const Login = (props) => {
   const [userName, setUsername] = useState("");
   const [passWord, setPassword] = useState("");
   const server = useContext(ServerContext);
-  const [loggedIn, setLoggedIn] = useContext(LoginSuccessContext);
+  const { loggedIn, setLoggedIn } = useContext(LoginSuccessContext);
 
   const [modalOpen, setModalOpen] = useState(false);
 

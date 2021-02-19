@@ -9,9 +9,9 @@ import { Link } from "react-router-dom";
 export const EditProduct = (props) => {
   const [itemDetails, setItemDetails] = useState([]);
   const server = useContext(ServerContext);
-  const [cart, setCart, savedCart] = useContext(CartContext);
+  const { cart, setCart, savedCart } = useContext(CartContext);
 
-  const [
+  const {
     products,
     setProducts,
     currentPage,
@@ -21,7 +21,7 @@ export const EditProduct = (props) => {
     sortBy,
     setSortBy,
     numberOfTotalPages,
-  ] = useContext(ProductContext);
+  } = useContext(ProductContext);
 
   const [itemAmount, setItemAmount] = useState(1);
 
@@ -37,7 +37,6 @@ export const EditProduct = (props) => {
     (item) => item.itemId === parseInt(props.match.params.itemId)
   );
 
- 
   return (
     <div className="container">
       <div className="row">

@@ -41,14 +41,14 @@ export const LoginSuccessProvider = (props) => {
 
   return (
     <LoginSuccessContext.Provider
-      value={[
+      value={{
         loggedIn,
         setLoggedIn,
         customerFK,
         setCustomerFK,
         loginWithJWTSuccess,
         setLoginWithJWTSuccess,
-      ]}
+      }}
     >
       {props.children}
     </LoginSuccessContext.Provider>

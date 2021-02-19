@@ -4,7 +4,7 @@ import { ChatArea } from "./ChatArea";
 import { ChatContext } from "../Contexts/ChatContext";
 
 export const Chat = (props) => {
-  const [
+  const {
     connected,
     subscribedTopics,
     chat,
@@ -14,14 +14,14 @@ export const Chat = (props) => {
     setConnected,
     chatIndex,
     setChatIndex,
-  ] = useContext(ChatContext);
+  } = useContext(ChatContext);
 
-  const [
+  const {
     customerProfile,
     userProfile,
     setCustomerProfile,
     setUserProfile,
-  ] = useContext(CustomerProfileContext);
+  } = useContext(CustomerProfileContext);
   console.log("cusid: " + customerProfile.customerId);
   const clickHandler = (subscriber, message) => {
     client.current.publish({

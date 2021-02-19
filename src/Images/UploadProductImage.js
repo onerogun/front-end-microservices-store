@@ -42,6 +42,7 @@ export const UploadProductImage = ({ itemId, newItemSaved, rerender }) => {
   }, []);
 
   // When item saved to database and id retrieved, run Postfiles function
+  // Changing (addPic) in EditPictures Module runs this function to save pictures
   useEffect(() => {
     //   console.log(itemId);
     if (file != null && itemId != null) {

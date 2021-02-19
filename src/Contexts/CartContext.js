@@ -14,14 +14,14 @@ const CartProvider = (props) => {
   const [cart, setCart] = useState(savedCart.current);
   const server = useContext(ServerContext);
   const [cartOrderItems, setCartOrderItems] = useState([]);
-  const [customerProfile] = useContext(CustomerProfileContext);
-  const [
+  const { customerProfile } = useContext(CustomerProfileContext);
+  const {
     loggedIn,
     setLoggedIn,
     customerFK,
     setCustomerFK,
     loginWithJWTSuccess,
-  ] = useContext(LoginSuccessContext);
+  } = useContext(LoginSuccessContext);
   const [firstFetchDone, setFirstFetchDone] = useState(false);
 
   /**
@@ -97,7 +97,7 @@ const CartProvider = (props) => {
 
   return (
     <CartContext.Provider
-      value={[
+      value={{
         cart,
         setCart,
         savedCart,
@@ -105,7 +105,7 @@ const CartProvider = (props) => {
         setCartOrderItems,
         firstFetchDone,
         setFirstFetchDone,
-      ]}
+      }}
     >
       {props.children}
     </CartContext.Provider>

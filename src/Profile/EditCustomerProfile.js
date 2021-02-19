@@ -8,13 +8,13 @@ import { Link } from "react-router-dom";
 
 export const EditCustomerProfile = (props) => {
   const server = useContext(ServerContext);
-  const [loggedIn, setLoggedIn] = useContext(LoginSuccessContext);
-  const [
+  const { loggedIn, setLoggedIn } = useContext(LoginSuccessContext);
+  const {
     customerProfile,
     userProfile,
     setCustomerProfile,
     setUserProfile,
-  ] = useContext(CustomerProfileContext);
+  } = useContext(CustomerProfileContext);
 
   const [name, setName] = useState();
   const [email, setEMail] = useState();

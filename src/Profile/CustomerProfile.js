@@ -8,22 +8,22 @@ import { Client } from "@stomp/stompjs";
 
 export const CustomerProfile = (props) => {
   const server = useContext(ServerContext);
-  const [
+  const {
     loggedIn,
     setLoggedIn,
     customerFK,
     setCustomerFK,
     loginWithJWTSuccess,
     setLoginWithJWTSuccess,
-  ] = useContext(LoginSuccessContext);
-  const [
+  } = useContext(LoginSuccessContext);
+  const {
     customerProfile,
     userProfile,
     setCustomerProfile,
     setUserProfile,
-  ] = useContext(CustomerProfileContext);
+  } = useContext(CustomerProfileContext);
 
-  const [
+  const {
     cart,
     setCart,
     savedCart,
@@ -31,9 +31,9 @@ export const CustomerProfile = (props) => {
     setCartOrderItems,
     firstFetchDone,
     setFirstFetchDone,
-  ] = useContext(CartContext);
+  } = useContext(CartContext);
 
-  const [
+  const {
     connected,
     subscribedTopics,
     chat,
@@ -43,9 +43,8 @@ export const CustomerProfile = (props) => {
     setConnected,
     chatIndex,
     setChatIndex,
-    ,
     setSubscribedTopics,
-  ] = useContext(ChatContext);
+  } = useContext(ChatContext);
 
   function handleLogout() {
     localStorage.removeItem("TokenJWT");

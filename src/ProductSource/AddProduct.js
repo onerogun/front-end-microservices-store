@@ -3,6 +3,7 @@ import { ServerContext } from "../Contexts/ServerContext";
 import axios from "axios";
 import { UploadProductImage } from "../Images/UploadProductImage";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
+import { ProductContext } from "../Contexts/ProductContext";
 
 export const AddProduct = (props) => {
   const server = useContext(ServerContext);
@@ -16,12 +17,14 @@ export const AddProduct = (props) => {
 
   const [newItemSaved, setNewItemSaved] = useState([]);
 
-  const [
+  const { setProductChange } = useContext(ProductContext);
+
+  const {
     customerProfile,
     userProfile,
     setCustomerProfile,
     setUserProfile,
-  ] = useContext(CustomerProfileContext);
+  } = useContext(CustomerProfileContext);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -57,6 +60,7 @@ export const AddProduct = (props) => {
         console.log(response.data);
         setItemSaving(response.data);
         setNewItemSaved((prev) => [...prev, 1]);
+        setProductChange((prev) => [...prev, 1]);
         window.alert("Item saved!");
         props.history.push("/");
       })

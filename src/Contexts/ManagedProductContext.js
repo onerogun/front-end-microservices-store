@@ -8,13 +8,14 @@ export const ManagedProductContext = React.createContext();
 export const ManagedProductProvider = (props) => {
   const [myProducts, setMyProducts] = useState([]);
   const server = useContext(ServerContext);
+  const [itemDeleted, setItemDeleted] = useState([]);
 
-  const [
+  const {
     customerProfile,
     userProfile,
     setCustomerProfile,
     setUserProfile,
-  ] = useContext(CustomerProfileContext);
+  } = useContext(CustomerProfileContext);
 
   useEffect(() => {
     axios
@@ -28,10 +29,12 @@ export const ManagedProductProvider = (props) => {
         setMyProducts(res.data);
       })
       .catch((err) => console.log(err));
-  }, [customerProfile]);
+  }, [customerProfile, itemDeleted]);
 
   return (
-    <ManagedProductContext.Provider value={[myProducts, setMyProducts]}>
+    <ManagedProductContext.Provider
+      value={{ myProducts, setMyProducts, setItemDeleted }}
+    >
       {props.children}
     </ManagedProductContext.Provider>
   );

@@ -8,17 +8,17 @@ import { Link } from "react-router-dom";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 
 export const NavBar = () => {
-  const [loggedIn] = useContext(LoginSuccessContext);
+  const { loggedIn } = useContext(LoginSuccessContext);
   const [searchWord, setSearchWord] = useState();
   const server = useContext(ServerContext);
   const [searchResult, setSearchResult] = useState([]);
-  const [cart] = useContext(CartContext);
-  const [
+  const { cart } = useContext(CartContext);
+  const {
     customerProfile,
     userProfile,
     setCustomerProfile,
     setUserProfile,
-  ] = useContext(CustomerProfileContext);
+  } = useContext(CustomerProfileContext);
   const dropdownList = useRef();
 
   useEffect(() => {

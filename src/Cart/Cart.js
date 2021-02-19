@@ -7,11 +7,11 @@ import axios from "axios";
 import { LoginSuccessContext } from "../Contexts/LoginSuccessContext";
 
 export const Cart = (props) => {
-  const [cart, setCart, savedCart, cartOrderItems] = useContext(CartContext);
+  const { cart, setCart, savedCart, cartOrderItems } = useContext(CartContext);
   const [taxRate, setTaxRate] = useState(10);
-  const [customerProfile] = useContext(CustomerProfileContext);
+  const { customerProfile } = useContext(CustomerProfileContext);
   const server = useContext(ServerContext);
-  const [loggedIn] = useContext(LoginSuccessContext);
+  const { loggedIn } = useContext(LoginSuccessContext);
 
   function calculateSubtotal() {
     if (cartOrderItems) {

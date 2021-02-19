@@ -10,6 +10,8 @@ export const ProductProvider = (props) => {
   const [products, setProducts] = useState([]);
   const server = useContext(ServerContext);
 
+  const [productChange, setProductChange] = useState([]);
+
   //If filtered before and saved to session storage, use those props otherwise use default
   // const stored = sessionStorage.getItem("filter");
   /* const searchProps = useRef(
@@ -62,6 +64,7 @@ export const ProductProvider = (props) => {
     direction,
     minPriceFilter,
     maxPriceFilter,
+    productChange,
   ]);
 
   /*
@@ -76,7 +79,7 @@ export const ProductProvider = (props) => {
 
   return (
     <ProductContext.Provider
-      value={[
+      value={{
         products,
         setProducts,
         currentPage,
@@ -92,7 +95,8 @@ export const ProductProvider = (props) => {
         setMinPriceFilter,
         maxPriceFilter,
         setMaxPriceFilter,
-      ]}
+        setProductChange,
+      }}
     >
       {props.children}
     </ProductContext.Provider>

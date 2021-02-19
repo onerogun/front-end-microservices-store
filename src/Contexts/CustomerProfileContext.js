@@ -10,15 +10,15 @@ export const CustomerProfileProvider = (props) => {
   const [customerProfile, setCustomerProfile] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
 
- // user: {"userId":50,"userName":"zz","userEMail":"zz@z.c","customerFK":36,"userRoles":"ADMIN"}
+  // user: {"userId":50,"userName":"zz","userEMail":"zz@z.c","customerFK":36,"userRoles":"ADMIN"}
 
-  const [
+  const {
     loggedIn,
     setLoggedIn,
     customerFK,
     setCustomerFK,
     loginWithJWTSuccess,
-  ] = useContext(LoginSuccessContext);
+  } = useContext(LoginSuccessContext);
 
   useEffect(() => {
     fetchUserProfile();
@@ -57,7 +57,12 @@ export const CustomerProfileProvider = (props) => {
 
   return (
     <CustomerProfileContext.Provider
-      value={[customerProfile, userProfile, setCustomerProfile, setUserProfile]}
+      value={{
+        customerProfile,
+        userProfile,
+        setCustomerProfile,
+        setUserProfile,
+      }}
     >
       {props.children}
     </CustomerProfileContext.Provider>

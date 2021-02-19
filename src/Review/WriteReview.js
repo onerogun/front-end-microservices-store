@@ -8,12 +8,12 @@ export const WriteReview = (props) => {
   const server = useContext(ServerContext);
   const [rating, setRating] = useState();
 
-  const [
+  const {
     customerProfile,
     userProfile,
     setCustomerProfile,
     setUserProfile,
-  ] = useContext(CustomerProfileContext);
+  } = useContext(CustomerProfileContext);
 
   function handleSubmit(e) {
     e.preventDefault();

@@ -11,9 +11,9 @@ import { ItemRating } from "../Components/ItemRating";
 export const ProductDetails = (props) => {
   const [itemDetails, setItemDetails] = useState([]);
   const server = useContext(ServerContext);
-  const [cart, setCart, savedCart] = useContext(CartContext);
+  const { cart, setCart, savedCart } = useContext(CartContext);
 
-  const [
+  const {
     products,
     setProducts,
     currentPage,
@@ -23,7 +23,7 @@ export const ProductDetails = (props) => {
     sortBy,
     setSortBy,
     numberOfTotalPages,
-  ] = useContext(ProductContext);
+  } = useContext(ProductContext);
 
   const [itemAmount, setItemAmount] = useState(1);
 

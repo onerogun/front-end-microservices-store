@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 
 export const Orders = () => {
   const server = useContext(ServerContext);
-  const [customerProfile] = useContext(CustomerProfileContext);
+  const { customerProfile } = useContext(CustomerProfileContext);
   const [orders, setOrders] = useState([]);
-  const [loggedIn, setLoggedIn] = useContext(LoginSuccessContext);
+  const { loggedIn, setLoggedIn } = useContext(LoginSuccessContext);
 
   useEffect(() => {
     if (loggedIn && customerProfile.customerId) {

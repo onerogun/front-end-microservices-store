@@ -4,7 +4,7 @@ import { ChatContext } from "../Contexts/ChatContext";
 import "./chatarea.css";
 
 export const ChatArea = () => {
-  const [
+  const {
     connected,
     subscribedTopics,
     chat,
@@ -14,14 +14,14 @@ export const ChatArea = () => {
     setConnected,
     chatIndex,
     setChatIndex,
-  ] = useContext(ChatContext);
+  } = useContext(ChatContext);
 
-  const [
+  const {
     customerProfile,
     userProfile,
     setCustomerProfile,
     setUserProfile,
-  ] = useContext(CustomerProfileContext);
+  } = useContext(CustomerProfileContext);
 
   const clickHandler = (subscriber, message) => {
     client.current.publish({
