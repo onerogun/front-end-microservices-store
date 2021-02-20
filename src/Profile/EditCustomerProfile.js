@@ -8,7 +8,14 @@ import { Link } from "react-router-dom";
 
 export const EditCustomerProfile = (props) => {
   const server = useContext(ServerContext);
-  const { loggedIn, setLoggedIn } = useContext(LoginSuccessContext);
+  const {
+    loggedIn,
+    setLoggedIn,
+    customerFK,
+    setCustomerFK,
+    loginWithJWTSuccess,
+    setLoginWithJWTSuccess,
+  } = useContext(LoginSuccessContext);
   const {
     customerProfile,
     userProfile,
@@ -60,10 +67,24 @@ export const EditCustomerProfile = (props) => {
         })
         .then((res) => {
           console.log("User updated: " + res);
-          localStorage.removeItem("TokenJWT");
-          setLoggedIn(false);
-
-          setEditUserSuccess(true);
+          axios
+            .post(`${server}/customer/saveCustomer`, cProfile, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("TokenJWT"),
+              },
+            })
+            .then((res) => {
+              console.log("Customer updated: " + res);
+              localStorage.removeItem("TokenJWT");
+              setLoggedIn(false);
+              setLoginWithJWTSuccess(false);
+              setEditUserSuccess(true);
+              setEditProfileSuccess(true);
+            })
+            .catch((err) => {
+              console.log("Customer update failed : " + err);
+            });
         })
         .catch((err) => {
           console.log("User update failed : " + err);
@@ -75,9 +96,9 @@ export const EditCustomerProfile = (props) => {
       console.log("values equal");
       setEditUserSuccess(true);
     }
-
+    /*
     axios
-      .post(`${server}/customer/save`, cProfile, {
+      .post(`${server}/customer/saveCustomer`, cProfile, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("TokenJWT"),
@@ -85,11 +106,13 @@ export const EditCustomerProfile = (props) => {
       })
       .then((res) => {
         console.log("Customer updated: " + res);
+        
+        setCustomerProfile([]);
         setEditProfileSuccess(true);
       })
       .catch((err) => {
         console.log("Customer update failed : " + err);
-      });
+      });*/
   }
 
   if (editUserSuccess && editProfileSuccess && loggedIn) {

@@ -4,6 +4,7 @@ import axios from "axios";
 import { UploadProductImage } from "../Images/UploadProductImage";
 import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 import { ProductContext } from "../Contexts/ProductContext";
+import { ManagedProductContext } from "../Contexts/ManagedProductContext";
 
 export const AddProduct = (props) => {
   const server = useContext(ServerContext);
@@ -26,11 +27,16 @@ export const AddProduct = (props) => {
     setUserProfile,
   } = useContext(CustomerProfileContext);
 
+  const { myProducts, itemUpdate, setItemUpdate } = useContext(
+    ManagedProductContext
+  );
+
   const handleSubmit = (event) => {
     const form = event.currentTarget;
 
     event.preventDefault();
     if (form.checkValidity() === false) {
+      //do nothing
     } else {
       sendToServer(newItem);
     }
@@ -61,6 +67,7 @@ export const AddProduct = (props) => {
         setItemSaving(response.data);
         setNewItemSaved((prev) => [...prev, 1]);
         setProductChange((prev) => [...prev, 1]);
+        setItemUpdate((prev) => [...prev, 1]);
         window.alert("Item saved!");
         props.history.push("/");
       })
@@ -154,7 +161,7 @@ export const AddProduct = (props) => {
                 className="form-check-input"
                 id="itemfeatured"
                 type="checkbox"
-                value={featured}
+                checked={featured}
                 onChange={(e) => setFeatured((prev) => !prev)}
               />
             </div>

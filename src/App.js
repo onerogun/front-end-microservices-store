@@ -26,6 +26,7 @@ import { ManagedProductProvider } from "./Contexts/ManagedProductContext";
 import { WriteReview } from "./Review/WriteReview";
 import { Chat } from "./Chat/Chat";
 import { ChatProvider } from "./Contexts/ChatContext";
+import { EditProductDefinition } from "./ProductSource/EditProductDefinition";
 
 function App() {
   return (
@@ -91,6 +92,10 @@ function App() {
                           component={WriteReview}
                         />
                         <Route path="/chat/:sendTo" component={Chat} />
+                        <Route
+                          path="/edit-product-definition/:itemId"
+                          component={EditProductDefinition}
+                        />
                       </Switch>
                     </React.Fragment>
                   </ChatProvider>

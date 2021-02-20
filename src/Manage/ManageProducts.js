@@ -8,7 +8,7 @@ import { CustomerProfileContext } from "../Contexts/CustomerProfileContext";
 import { ProductContext } from "../Contexts/ProductContext";
 
 export const ManageProducts = () => {
-  const { myProducts, setMyProducts, setItemDeleted } = useContext(
+  const { myProducts, itemUpdate, setItemUpdate } = useContext(
     ManagedProductContext
   );
   const server = useContext(ServerContext);
@@ -55,7 +55,7 @@ export const ManageProducts = () => {
       .then((res) => {
         console.log("item deleted:" + res);
         //Fetch user items again
-        setItemDeleted((prev) => [...prev, 1]);
+        setItemUpdate((prev) => [...prev, 1]);
         setProductChange((prev) => [...prev, 1]);
       })
       .catch((err) => console.log("item could not be deleted: " + err));

@@ -18,6 +18,7 @@ export const CustomerProfileProvider = (props) => {
     customerFK,
     setCustomerFK,
     loginWithJWTSuccess,
+    setLoginWithJWTSuccess,
   } = useContext(LoginSuccessContext);
 
   useEffect(() => {

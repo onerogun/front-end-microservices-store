@@ -44,6 +44,13 @@ export const EditProduct = (props) => {
           <Images itemId={props.match.params.itemId} />
         </div>
         <div className="col-md-5 mt-2">
+          {item ? <h2>{item.itemName}</h2> : null}
+          <Link
+            className="btn btn-primary"
+            to={`/edit-product-definition/${props.match.params.itemId}`}
+          >
+            Edit Item
+          </Link>
           <table className="table">
             <thead>
               <tr>

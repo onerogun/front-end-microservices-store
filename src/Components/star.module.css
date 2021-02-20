@@ -1,6 +1,6 @@
 @charset "UTF-8";
 :root {
-  --star-size: 40px;
+  --star-size: 2.1rem;
   --star-color: #fff;
   --star-background: #fc0;
 }
@@ -14,7 +14,7 @@
 }
 .Stars::before {
   content: "★★★★★";
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   background: linear-gradient(
     90deg,
     var(--star-background) var(--percent),
@@ -23,4 +23,3 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
